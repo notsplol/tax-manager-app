@@ -1,0 +1,29 @@
+{
+  "name": "tax-manager-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:main\" \"npm run dev:renderer\"",
+    "dev:main": "tsc -p apps/main --watch",
+    "dev:renderer": "npm --prefix apps/renderer run dev",
+    "build": "tsc -b apps/main && npm --prefix apps/renderer run build",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/notsplol/tax-manager-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/notsplol/tax-manager-app/issues"
+  },
+  "homepage": "https://github.com/notsplol/tax-manager-app#readme",
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "electron": "^36.4.0"
+  }
+}
