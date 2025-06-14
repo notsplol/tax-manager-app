@@ -24,6 +24,7 @@
   "homepage": "https://github.com/notsplol/tax-manager-app#readme",
   "devDependencies": {
     "concurrently": "^9.1.2",
-    "electron": "^36.4.0"
+    "electron": "^36.4.0",
+    "typescript": "^5.8.3"
   }
 }
