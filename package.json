@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrently \"npm run dev:main\" \"npm run dev:renderer\"",
-    "dev:main": "tsc -p apps/main --watch",
+    "dev:main": "ts-node apps/main/index.ts",
     "dev:renderer": "npm --prefix apps/renderer run dev",
     "build": "tsc -b apps/main && npm --prefix apps/renderer run build",
     "lint": "eslint ."
@@ -26,5 +26,9 @@
     "concurrently": "^9.1.2",
     "electron": "^36.4.0",
     "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "ts-node": "^10.9.2"
   }
 }

@@ -10,7 +10,7 @@
     "types": ["node"],
     "sourceMap": true
   },
-  "exclude": ["generated", "node_modules"],
-  "include": ["**/*.ts"]
+  "exclude": ["node_modules"],
+  "include": ["**/*.ts", "generated/prisma"]
   
 }

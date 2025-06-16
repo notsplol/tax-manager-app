@@ -1,17 +1,17 @@
 import { useState } from "react";
 
 type Props = {
-  onAddClient: (client: Client) => void;
+  onAddClient: (client: NewClient) => void;
 };
 
-type Client = {
+type NewClient = {
   name: string;
   email: string;
   phone: string;
 };
 
 export default function ClientForm({ onAddClient }: Props) {
-  const [formData, setFormData] = useState<Client>({
+  const [formData, setFormData] = useState<NewClient>({
     name: "",
     email: "",
     phone: "",
