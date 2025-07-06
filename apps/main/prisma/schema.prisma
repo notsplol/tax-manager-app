@@ -15,8 +15,18 @@ datasource db {
 }
 
 model Client {
-  id    Int    @id @default(autoincrement())
-  name  String
-  email String @unique
-  phone String?
+  id       Int       @id @default(autoincrement())
+  name     String
+  email    String    @unique
+  phone    String?
+  payments Payment[]
+}
+
+model Payment {
+  id        Int      @id @default(autoincrement())
+  amount    Float
+  status    String
+  date      DateTime
+  client    Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientId  Int
 }

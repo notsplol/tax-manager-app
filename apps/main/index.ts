@@ -91,3 +91,29 @@ app.delete('/clients/:id', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`)
 })
+
+app.get('/api/payments', async (req, res) => {
+  const payments = await prisma.payment.findMany({
+    include: { client: true },
+  });
+  res.json(payments);
+});
+
+app.post('/api/payments', async (req, res) => {
+  const { clientId, amount, status, date } = req.body;
+  const payment = await prisma.payment.create({
+    data: { clientId, amount, status, date: new Date(date) },
+  });
+  res.json(payment);
+});
+
+app.delete('/api/payments/:id', async (req, res) => {
+  const paymentId = Number(req.params.id);
+  try {
+    await prisma.payment.delete({ where: { id: paymentId } });
+    res.status(204).send();
+  } catch (error) {
+    console.error('Delete payment error:', error); 
+    res.status(500).json({ error: 'Failed to delete payment' });
+  }
+});
