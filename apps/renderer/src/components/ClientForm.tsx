@@ -28,7 +28,7 @@ export default function ClientForm({ onAddClient }: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 p-4 bg-white rounded-lg shadow max-w-md mx-auto">
+    <form onSubmit={handleSubmit} className="space-x-4 space-y-4 p-4 bg-white rounded-lg shadow max-w-md mx-auto">
       <h2 className="text-xl font-semibold">Add New Client</h2>
       <input
         name="name"
@@ -58,7 +58,7 @@ export default function ClientForm({ onAddClient }: Props) {
         required
       />
       <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-        Add Client
+        Add New Client
       </button>
     </form>
   );
