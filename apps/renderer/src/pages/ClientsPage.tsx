@@ -105,7 +105,7 @@ export default function ClientsPage() {
   }
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 grid grid-cols-[16rem_1fr]">
+    <div className="w-full min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 grid grid-cols-[14rem_1fr] gap-x-20">
       {/* Sidebar */}
       <aside className="h-screen bg-white/80 backdrop-blur-xl border-r border-gray-200/50 p-6 flex flex-col shadow-xl">
         <div className="mb-12">
@@ -113,8 +113,8 @@ export default function ClientsPage() {
             <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
               <Users className="w-7 h-7 text-white" />
             </div>
-            <h2 className="text-2xl font-extrabold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-              Vijay Patel
+            <h2 className="text-2xl font-extrabold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text dark:text-white">
+              Vijay
             </h2>
           </div>
           <p className="text-sm text-gray-600 ml-15">Tax & Financial Services</p>
@@ -144,15 +144,12 @@ export default function ClientsPage() {
       </aside>
 
       {/* Main content */}
-      <main className="overflow-auto">
-        <div className="max-w-7xl mx-auto px-8 py-12">
+      <main className="flex-1 overflow-visible px-10 py-10">
+        <div className="max-w-7xl mx-auto px-8 py-12 overflow-visible grid gap-6">
           <div className="mb-10">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-3">
-                  Client Management
-                </h1>
-                <p className="text-xl text-gray-600">Manage your clients and communications effortlessly</p>
+                <h1 className="text-3xl font-extrabold mb-10 text-gray-900 dark:text-white">‎ Client Management</h1>
               </div>
               <button
                 onClick={() => setShowAddForm(!showAddForm)}
@@ -185,7 +182,7 @@ export default function ClientsPage() {
                 </button>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 overflow-visible">
                 <div className="relative group">
                   <User className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
                   <input
@@ -231,9 +228,9 @@ export default function ClientsPage() {
                   </button>
                   <button
                     type="submit"
-                    className="px-10 py-4 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold rounded-2xl shadow-lg shadow-green-500/30 hover:shadow-xl hover:shadow-green-500/40 transition-all duration-300 transform hover:scale-105"
+                    className="px-10 py-4 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold rounded-2xl shadow-lg shadow-green-500/30 hover:shadow-xl hover:shadow-green-500/40 transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
                   >
-                    <Check className="w-5 h-5 mr-2 inline" />
+                  <Check className="w-5 h-5 mr-2" />
                     Add Client
                   </button>
                 </div>
@@ -261,7 +258,8 @@ export default function ClientsPage() {
               {clients.map((client: Client) => (
                 <div
                   key={client.id}
-                  className="group bg-white/90 backdrop-blur-xl rounded-3xl p-8 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-2"
+                  className="group bg-white/90 backdrop-blur-xl rounded-3xl p-12 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.01] origin-left hover:y-10"
+                  style={{ marginLeft: '1rem' }}
                 >
                   {/* Client Info */}
                   <div className="mb-8">
