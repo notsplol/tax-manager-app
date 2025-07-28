@@ -51,9 +51,9 @@ export default function ClientsPage() {
   const [showAddForm, setShowAddForm] = useState(false);
 
   const navItems = [
-    { label: 'Clients', to: '/clients', icon: <Users className="w-5 h-5" /> },
-    { label: 'Payments', to: '/payments', icon: <CreditCard className="w-5 h-5" /> },
-    { label: 'Settings', to: '/settings', icon: <Settings className="w-5 h-5" /> },
+    { label: 'Clients', to: '/clients', icon: <Users className="w-5 h-5" style={{ marginRight: '0.55rem', marginLeft: '0.2rem'}}/> },
+    { label: 'Payments', to: '/payments', icon: <CreditCard className="w-5 h-5" style={{ marginRight: '0.55rem', marginLeft: '0.2rem'}}/> },
+    { label: 'Settings', to: '/settings', icon: <Settings className="w-5 h-5" style={{ marginRight: '0.55rem', marginLeft: '0.2rem'}}/> },
   ];
 
   useEffect(() => {
@@ -105,41 +105,54 @@ export default function ClientsPage() {
   }
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 grid grid-cols-[14rem_1fr] gap-x-20">
+    <div className="w-full min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 grid grid-cols-[16rem_1fr] gap-x-20">
       {/* Sidebar */}
-      <aside className="h-screen bg-white/80 backdrop-blur-xl border-r border-gray-200/50 p-6 flex flex-col shadow-xl">
+      <aside className="h-screen bg-[#2f2f2f] backdrop-blur-md p-6 flex flex-col shadow-xl shadow-black/10">
         <div className="mb-12">
           <div className="flex items-center space-x-3 mb-2">
             <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
-              <Users className="w-7 h-7 text-white" />
+              <User className="w-7 h-7 text-white" style={{ marginRight: '0.35rem', marginLeft: '1rem'}} />
             </div>
             <h2 className="text-2xl font-extrabold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text dark:text-white">
-              Vijay
+              Vijay Patel
             </h2>
           </div>
-          <p className="text-sm text-gray-600">Tax & Financial Services</p>
         </div>
 
         <nav>
-          <ul className="space-y-3">
-            {navItems.map(({ label, to, icon }) => (
-              <li key={label}>
-                <a
-                  href={to}
-                  className={`flex items-center px-6 py-4 rounded-2xl font-semibold transition-all duration-300 group ${
-                    to === '/clients'
-                      ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-500/30'
-                      : 'text-gray-700 hover:bg-blue-50 hover:text-blue-700 hover:shadow-md'
-                  }`}
-                >
-                  <span className="mr-4 transition-transform group-hover:scale-110">
-                    {icon}
-                  </span>
-                  {label}
-                </a>
-              </li>
-            ))}
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0, width: '100%' }}>
+          {navItems.map((item) => (
+          <li key={item.label} style={{ marginBottom: '0.75rem' }}>
+            <a
+              href={item.to}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                backgroundColor: 'transparent',
+                border: 'none',
+                padding: '0.75rem 1rem',
+                borderRadius: '0.75rem',
+                width: '80%',
+                textDecoration: 'none',
+                color: 'white',
+                fontWeight: 500,
+                fontSize: '1rem',
+                transition: 'background-color 0.3s ease',
+                }}
+                onMouseOver={(e) =>
+                (e.currentTarget.style.backgroundColor = 'rgba(34, 255, 255, 0.1)')
+                }
+                onMouseOut={(e) =>
+                (e.currentTarget.style.backgroundColor = 'transparent')
+                }
+                  >
+              {item.icon}
+              {item.label}
+            </a>
+         </li>
+              ))}
           </ul>
+
         </nav>
       </aside>
 
@@ -153,7 +166,7 @@ export default function ClientsPage() {
               </div>
               <button
                 onClick={() => setShowAddForm(!showAddForm)}
-                className="group flex items-center px-8 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold rounded-2xl shadow-xl shadow-blue-500/30 hover:shadow-2xl hover:shadow-blue-500/40 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1"
+                className="group flex items-center px-8 py-4 ml-4 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold rounded-2xl shadow-xl shadow-blue-500/30 hover:shadow-2xl hover:shadow-blue-500/40 transition-all duration-300 transform hover:scale-[1.01] hover:-translate-y-1"
               >
                 <Plus className="w-6 h-6 mr-3 transition-transform group-hover:rotate-180" />
                 Add New Client
@@ -251,14 +264,29 @@ export default function ClientsPage() {
               </div>
             </div>
           ) : (
-            <div className="grid gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 px-4">
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', rowGap: '1.5rem'}}>
               {clients.map((client: Client) => (
                 <div
                   key={client.id}
-                  className="group bg-white/90 backdrop-blur-xl rounded-3xl p-12 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.01] origin-left hover:y-10"
-                  style={{ marginLeft: '1rem',
-                    paddingLeft: '1rem'
-                   }}
+                  className="group bg-white/5 backdrop-blur-md border border-white/10 shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-[1.01] rounded-3xl"
+                  style={{ marginLeft: '2rem',
+                    borderRadius: '1.5rem',
+                    padding: '1rem',
+                    paddingLeft: '1rem',
+                    backdropFilter: 'blur(12px)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)',
+                    transition: 'all 0.3s ease',
+                    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.25)';
+                    e.currentTarget.style.transform = 'scale(1.01)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)';
+                    e.currentTarget.style.transform = 'scale(1)';
+                  }}
                 > 
                   {/* Client Info */}
                   <div className="mb-8">
@@ -274,12 +302,12 @@ export default function ClientsPage() {
 
                     <div className="space-y-3">
                       <div className="flex items-center text-gray-700 bg-gray-50 rounded-xl p-3">
-                        <AtSign className="w-5 h-5 mr-3 text-blue-500" />
+                        <AtSign className="w-5 h-5 mr-3 text-blue-500" style={{ marginRight: '0.35rem', marginBottom: '0.5rem', paddingTop: '0.75rem'}}/>
                         <span className="font-medium">{client.email}</span>
                       </div>
                       {client.phone && (
                         <div className="flex items-center text-gray-700 bg-gray-50 rounded-xl p-3">
-                          <Phone className="w-5 h-5 mr-3 text-green-500" />
+                          <Phone className="w-5 h-5 mr-3 text-green-500" style={{ marginRight: '0.35rem'}}/>
                           <span className="font-medium">{client.phone}</span>
                         </div>
                       )}
@@ -295,7 +323,7 @@ export default function ClientsPage() {
                       }}
                       className="flex-1 flex items-center justify-center px-4 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
                     >
-                      <Mail className="w-4 h-4 mr-2" />
+                      <Mail className="w-4 h-4 mr-2" style={{ marginRight: '0.35rem'}}/>
                       Email
                     </button>
                     <button
