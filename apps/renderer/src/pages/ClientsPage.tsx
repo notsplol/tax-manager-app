@@ -117,7 +117,7 @@ export default function ClientsPage() {
               Vijay
             </h2>
           </div>
-          <p className="text-sm text-gray-600 ml-15">Tax & Financial Services</p>
+          <p className="text-sm text-gray-600">Tax & Financial Services</p>
         </div>
 
         <nav>
@@ -149,7 +149,7 @@ export default function ClientsPage() {
           <div className="mb-10">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-3xl font-extrabold mb-10 text-gray-900 dark:text-white">‎ Client Management</h1>
+                <h1 className="text-3xl font-extrabold mb-10 text-gray-900 dark:text-white"> Client Management</h1>
               </div>
               <button
                 onClick={() => setShowAddForm(!showAddForm)}
@@ -184,7 +184,6 @@ export default function ClientsPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 overflow-visible">
                 <div className="relative group">
-                  <User className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
                   <input
                     type="text"
                     placeholder="Full Name"
@@ -196,7 +195,6 @@ export default function ClientsPage() {
                 </div>
 
                 <div className="relative group">
-                  <AtSign className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
                   <input
                     type="email"
                     placeholder="Email Address"
@@ -208,7 +206,6 @@ export default function ClientsPage() {
                 </div>
 
                 <div className="relative group">
-                  <Phone className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
                   <input
                     type="text"
                     placeholder="Phone Number"
@@ -254,20 +251,22 @@ export default function ClientsPage() {
               </div>
             </div>
           ) : (
-            <div className="grid gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 px-4">
               {clients.map((client: Client) => (
                 <div
                   key={client.id}
                   className="group bg-white/90 backdrop-blur-xl rounded-3xl p-12 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.01] origin-left hover:y-10"
-                  style={{ marginLeft: '1rem' }}
-                >
+                  style={{ marginLeft: '1rem',
+                    paddingLeft: '1rem'
+                   }}
+                > 
                   {/* Client Info */}
                   <div className="mb-8">
-                    <div className="flex items-center mb-6">
-                      <div className="w-16 h-16 bg-gradient-to-br from-blue-400 via-indigo-500 to-purple-500 rounded-3xl flex items-center justify-center mr-5 shadow-lg group-hover:shadow-xl transition-all duration-300">
-                        <User className="w-8 h-8 text-white" />
+                    <div className="flex items-center mb-6 gap-4">
+                      <div className="w-16 h-16 bg-gradient-to-br from-blue-400 via-indigo-500 to-purple-500 rounded-3xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
+                        
                       </div>
-                      <div>
+                      <div className="flex flex-col justify-center">
                         <h3 className="text-xl font-bold text-gray-900 mb-1">{client.name}</h3>
                         <p className="text-sm text-gray-500 font-medium">Client ID: #{client.id}</p>
                       </div>
@@ -294,7 +293,7 @@ export default function ClientsPage() {
                         setSelectedClient(client);
                         setActiveEmailClientId(activeEmailClientId === client.id ? null : client.id);
                       }}
-                      className="flex-1 flex items-center justify-center px-4 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                      className="flex-1 flex items-center justify-center px-4 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
                     >
                       <Mail className="w-4 h-4 mr-2" />
                       Email
@@ -304,7 +303,7 @@ export default function ClientsPage() {
                         setSelectedClient(client);
                         setActivePaymentClientId(activePaymentClientId === client.id ? null : client.id);
                       }}
-                      className="flex-1 flex items-center justify-center px-4 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                      className="flex-1 flex items-center justify-center px-4 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
                     >
                       <DollarSign className="w-4 h-4 mr-2" />
                       Payment
@@ -319,7 +318,7 @@ export default function ClientsPage() {
                           handleDeleteClient(client.id);
                         }
                       }}
-                      className="px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                      className="px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
