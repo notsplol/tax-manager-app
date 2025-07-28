@@ -114,7 +114,7 @@ export default function ClientsPage() {
     
     <div className="w-full min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 grid grid-cols-[16rem_1fr] gap-x-20">
       {/* Sidebar */}
-      <aside className="fixed h-screen bg-[#2f2f2f] backdrop-blur-md p-6 flex flex-col shadow-xl shadow-black/10 w-[13.5rem]">
+      <aside className="fixed h-screen bg-[#2f2f2f] backdrop-blur-md p-6 flex flex-col shadow-xl shadow-black/10 w-[13.7rem]">
         <div className="mb-12">
           <div className="flex items-center space-x-3 mb-2">
             <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
@@ -139,7 +139,7 @@ export default function ClientsPage() {
                 border: 'none',
                 padding: '0.75rem 1rem',
                 borderRadius: '0.75rem',
-                width: '80%',
+                width: '82%',
                 textDecoration: 'none',
                 color: 'white',
                 fontWeight: 500,
@@ -147,7 +147,7 @@ export default function ClientsPage() {
                 transition: 'background-color 0.3s ease',
                 }}
                 onMouseOver={(e) =>
-                (e.currentTarget.style.backgroundColor = 'rgba(34, 255, 255, 0.1)')
+                (e.currentTarget.style.backgroundColor = '#1a1a1a')
                 }
                 onMouseOut={(e) =>
                 (e.currentTarget.style.backgroundColor = 'transparent')
@@ -183,77 +183,81 @@ export default function ClientsPage() {
 
           {/* Add Client Form */}
           {showAddForm && (
-            <form
-              onSubmit={handleAddClient}
-              className="mb-10 bg-white/90 backdrop-blur-xl rounded-3xl p-8 border border-white/50 shadow-2xl"
-              noValidate
-            >
-              <div className="flex items-center justify-between mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 flex items-center">
-                  <Plus className="w-7 h-7 mr-3 text-blue-600" />
-                  Add New Client
-                </h3>
-                <button
-                  type="button"
-                  onClick={() => setShowAddForm(false)}
-                  className="p-3 hover:bg-gray-100 rounded-2xl transition-all duration-200 group"
-                >
-                  <X className="w-6 h-6 text-gray-500 group-hover:text-gray-700 group-hover:rotate-90 transition-all duration-200" />
-                </button>
-              </div>
+  <form
+    onSubmit={handleAddClient}
+    className="mb-[1rem] bg-[#272727]/80 backdrop-blur-xl rounded-[1rem] p-8 border border-white/10 shadow-2xl shadow-black/30 text-white ml-[2rem]"
+    noValidate
+  >
+    <div className="flex items-center justify-between mb-[-0.5rem] ml-[1rem]">
+      <h3 className="text-2xl font-bold flex items-center">
+        <Plus className="w-7 h-7 mr-3 text-emerald-400" />
+        Add New Client
+      </h3>
+      <button
+        type="button"
+        onClick={() => setShowAddForm(false)}
+        className="p-3 hover:bg-white/10 rounded-2xl transition-all duration-200 group"
+      >
+        <X className="w-6 h-6 text-gray-400 group-hover:text-white group-hover:rotate-90 transition-all duration-200" />
+      </button>
+    </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 overflow-visible">
-                <div className="relative group">
-                  <input
-                    type="text"
-                    placeholder="Full Name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full pl-12 pr-6 py-4 bg-white/70 border-2 border-gray-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 text-gray-900 placeholder-gray-500 font-medium"
-                    required
-                  />
-                </div>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-[1rem] ml-[0.75rem] mt-[0.5rem]">
+      {/* Name */}
+      <div className="relative group">
+        <input
+          type="text"
+          placeholder="Full Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="w-[40rem] pl-4 pr-4 py-[0.5rem] bg-[#474747]/60 border border-white/20 rounded-[0.3rem] focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500 transition-all duration-300 text-white placeholder-gray-300 font-medium"
+          required
+        />
+      </div>
 
-                <div className="relative group">
-                  <input
-                    type="email"
-                    placeholder="Email Address"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full pl-12 pr-6 py-4 bg-white/70 border-2 border-gray-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 text-gray-900 placeholder-gray-500 font-medium"
-                    required
-                  />
-                </div>
+      {/* Email */}
+      <div className="relative group">
+        <input
+          type="email"
+          placeholder="Email Address"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-[40rem] pl-4 pr-4 py-[0.5rem] bg-[#474747]/60 border border-white/20 rounded-[0.3rem] focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500 transition-all duration-300 text-white placeholder-gray-300 font-medium"
+          required
+        />
+      </div>
 
-                <div className="relative group">
-                  <input
-                    type="text"
-                    placeholder="Phone Number"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="w-full pl-12 pr-6 py-4 bg-white/70 border-2 border-gray-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 text-gray-900 placeholder-gray-500 font-medium"
-                  />
-                </div>
+      {/* Phone */}
+      <div className="relative group">
+        <input
+          type="text"
+          placeholder="Phone Number"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          className="w-[40rem] pl-4 pr-4 py-[0.5rem] bg-[#474747]/60 border border-white/20 rounded-[0.3rem] focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500 transition-all duration-300 text-white placeholder-gray-300 font-medium"
+        />
+      </div>
 
-                <div className="md:col-span-3 flex justify-end space-x-4 pt-4">
-                  <button
-                    type="button"
-                    onClick={() => setShowAddForm(false)}
-                    className="px-8 py-4 text-gray-600 hover:text-gray-800 font-semibold rounded-2xl hover:bg-gray-100 transition-all duration-200"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-10 py-4 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold rounded-2xl shadow-lg shadow-green-500/30 hover:shadow-xl hover:shadow-green-500/40 transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
-                  >
-                  <Check className="w-5 h-5 mr-2" />
-                    Add Client
-                  </button>
-                </div>
-              </div>
-            </form>
-          )}
+      {/* Buttons */}
+      <div className="md:col-span-3 flex justify-end space-x-4 pt-6">
+        <button
+          type="button"
+          onClick={() => setShowAddForm(false)}
+          className="px-6 py-3 text-gray-300 hover:text-white font-semibold rounded-2xl hover:bg-white/10 transition-all duration-200 mb-[0.3rem]"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 transition-all duration-300 transform hover:scale-105 flex items-center justify-center mb-[0.3rem]"
+        >
+          <Check className="w-5 h-5 mr-[0.4rem]" />
+          Add Client
+        </button>
+      </div>
+    </div>
+  </form>
+)}
 
           {/* Status Messages */}
           {loading ? (
@@ -308,19 +312,19 @@ export default function ClientsPage() {
                 }).map((client: Client) => (
                   <div
                   key={client.id}
-                  className="group bg-white/5 backdrop-blur-md border border-white/10 shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-[1.01] rounded-3xl"
+                  className="group bg-white/5 backdrop-blur-md border border-white/10 shadow-lg hover:shadow-lg transition-all duration-300 transform hover:scale-[1.01] rounded-3xl"
                   style={{ marginLeft: '2rem',
                     borderRadius: '1.5rem',
                     padding: '1rem',
                     paddingLeft: '1rem',
                     backdropFilter: 'blur(12px)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.07)',
                     boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)',
                     transition: 'all 0.3s ease',
-                    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                    backgroundColor: '#2f2f2f',
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.25)';
+                    e.currentTarget.style.boxShadow = '0 25px 50px -10px rgba(0, 0, 0, 0.25)';
                     e.currentTarget.style.transform = 'scale(1.01)';
                   }}
                   onMouseLeave={(e) => {
