@@ -14,6 +14,7 @@ import {
   AtSign,
   Calendar,
   Check,
+  Search
 } from 'lucide-react';
 
 import type { Client } from '../../../main/generated/prisma';
@@ -49,12 +50,17 @@ export default function ClientsPage() {
   const [activeEmailClientId, setActiveEmailClientId] = useState<number | null>(null);
   const [activePaymentClientId, setActivePaymentClientId] = useState<number | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const navItems = [
     { label: 'Clients', to: '/clients', icon: <Users className="w-5 h-5" style={{ marginRight: '0.55rem', marginLeft: '0.2rem'}}/> },
     { label: 'Payments', to: '/payments', icon: <CreditCard className="w-5 h-5" style={{ marginRight: '0.55rem', marginLeft: '0.2rem'}}/> },
     { label: 'Settings', to: '/settings', icon: <Settings className="w-5 h-5" style={{ marginRight: '0.55rem', marginLeft: '0.2rem'}}/> },
   ];
+
+  const filteredClients = clients.filter((client) =>
+  client.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   useEffect(() => {
     async function loadClients() {
@@ -105,9 +111,10 @@ export default function ClientsPage() {
   }
 
   return (
+    
     <div className="w-full min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 grid grid-cols-[16rem_1fr] gap-x-20">
       {/* Sidebar */}
-      <aside className="h-screen bg-[#2f2f2f] backdrop-blur-md p-6 flex flex-col shadow-xl shadow-black/10">
+      <aside className="fixed h-screen bg-[#2f2f2f] backdrop-blur-md p-6 flex flex-col shadow-xl shadow-black/10 w-[13.5rem]">
         <div className="mb-12">
           <div className="flex items-center space-x-3 mb-2">
             <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
@@ -157,7 +164,7 @@ export default function ClientsPage() {
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 overflow-visible px-10 py-10">
+      <main className="ml-[14rem] flex-1 overflow-visible px-10 py-10">
         <div className="max-w-7xl mx-auto px-8 py-12 overflow-visible grid gap-6">
           <div className="mb-10">
             <div className="flex items-center justify-between">
@@ -263,10 +270,43 @@ export default function ClientsPage() {
                 <p className="text-red-700 font-semibold text-lg">{error}</p>
               </div>
             </div>
-          ) : (
+          ) : ( <>
+
+              {/* SEARCH INPUT */}
+              <div className="px-4 mb-8 flex justify-start">
+                <div className="relative w-full max-w-md rounded-full shadow-md">
+                  <input
+                    type="text"
+                    placeholder="Search clients..."
+                    className="w-[50rem] pl-10 pr-4 py-3 rounded-[0.5rem] bg-white/90 backdrop-blur border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition-all duration-200 text-gray-800 placeholder-gray-400"
+                    style={{padding: '10px', marginLeft: "2rem", marginBottom: "0.1rem"}}
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                  <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" style={{marginTop: "0.5rem", marginLeft: '0.5rem'}} />
+                  <p className="text-[0.9rem] text-gray-600 font-[300]" style={{marginLeft: '2.5rem', marginBottom:'2rem'}}>
+                    You have {filteredClients.length} {filteredClients.length === 1 ? 'client' : 'clients'}
+                  </p>
+                </div>
+              </div>
+
             <div style={{ display: 'grid', gridTemplateColumns: '1fr', rowGap: '1.5rem'}}>
-              {clients.map((client: Client) => (
-                <div
+              {clients.filter((client) =>
+                client.name.toLowerCase().includes(searchQuery.toLowerCase())
+                  )
+                .sort((a, b) => {
+                  const query = searchQuery.toLowerCase();
+                  const aName = a.name.toLowerCase();
+                  const bName = b.name.toLowerCase();
+
+                  const aStarts = aName.startsWith(query);
+                  const bStarts = bName.startsWith(query);
+
+                  if (aStarts && !bStarts) return -1;
+                  if (!aStarts && bStarts) return 1;
+                  return aName.localeCompare(bName);
+                }).map((client: Client) => (
+                  <div
                   key={client.id}
                   className="group bg-white/5 backdrop-blur-md border border-white/10 shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-[1.01] rounded-3xl"
                   style={{ marginLeft: '2rem',
@@ -295,7 +335,7 @@ export default function ClientsPage() {
                         
                       </div>
                       <div className="flex flex-col justify-center">
-                        <h3 className="text-xl font-bold text-gray-900 mb-1">{client.name}</h3>
+                        <h3 className="text-xl font-bold text-gray-900 mb-[-1rem]">{client.name}</h3>
                         <p className="text-sm text-gray-500 font-medium">Client ID: #{client.id}</p>
                       </div>
                     </div>
@@ -494,7 +534,8 @@ export default function ClientsPage() {
                 </div>
               ))}
             </div>
-          )}
+          </>
+        )}
         </div>
       </main>
     </div>
