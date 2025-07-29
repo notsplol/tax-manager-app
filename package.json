@@ -27,13 +27,14 @@
     "concurrently": "^9.1.2",
     "electron": "^36.4.0",
     "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.11",
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.1.11",
     "dotenv": "^16.5.0",
     "lucide-react": "^0.526.0",
     "react-router-dom": "^7.6.3",
+    "tailwindcss": "^4.1.11",
     "ts-node": "^10.9.2"
   }
 }

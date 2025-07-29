@@ -35,7 +35,8 @@ export default function PaymentsPage() {
   // Search/filter state
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'Paid' | 'Pending' | 'Overdue'>('all');
-
+  const [clientSearch, setClientSearch] = useState('');
+  
   // Add payment form state
   const [showAddForm, setShowAddForm] = useState(false);
   const [clientId, setClientId] = useState<number | null>(null);
@@ -112,7 +113,7 @@ export default function PaymentsPage() {
     if (amount === undefined) return '-';
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'CAD',
       minimumFractionDigits: 2,
     }).format(amount);
   };
@@ -165,129 +166,61 @@ export default function PaymentsPage() {
   if (error) return <p className="p-6 text-red-500">{error}</p>;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-[#272727] text-white">
       <div className="max-w-7xl mx-auto p-6">
         {/* Header */}
         <div className="mb-[2rem]">
-          <h1 className="text-3xl font-bold text-slate-900 mb-[-0.5rem]">Payments Dashboard</h1>
-          <p className="text-slate-600 ml-[2rem] font-[300]">
+          <h1 className="text-3xl font-bold text-white mb-2">Payments Dashboard</h1>
+          <p className="text-white ml-[2rem] font-[300]">
             Track client payments, revenue, and manage your finances
           </p>
         </div>
 
         {/* Metrics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-[1rem]">
-          <div className="bg-white rounded-2xl p-6 shadow-lg border border-slate-200 hover:shadow-xl transition-all duration-300 ml-[2rem] mb-[2rem]" style={{ marginLeft: '2rem',
-                    borderRadius: '1.5rem',
-                    padding: '1rem',
-                    paddingLeft: '1rem',
-                    backdropFilter: 'blur(12px)',
-                    border: '1px solid rgba(255, 255, 255, 0.07)',
-                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)',
-                    transition: 'all 0.3s ease',
-                    backgroundColor: '#3c3c3c',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow = '0 25px 50px -10px rgba(0, 0, 0, 0.25)';
-                    e.currentTarget.style.transform = 'scale(1.01)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)';
-                    e.currentTarget.style.transform = 'scale(1)';
-                  }}>
+          <div className="bg-[#3c3c3c] rounded-2xl p-6 backdrop-blur-md border border-white/10 shadow-xl hover:shadow-4xl transition-all duration-300 ml-[2rem] mb-[2rem]">
             <div className="flex items-center justify-between mb-4">
-              <div className="p-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl">
+              <div className="py-[0.6rem] px-[0.75rem] bg-gradient-to-r from-[#2563eb] to-[#6086d7] rounded-[1rem]">
                 <TrendingUp className="w-6 h-6 text-white" />
               </div>
             </div>
-            <h3 className="text-sm font-medium text-slate-600 mb-1">Total Revenue</h3>
-            <p className="text-2xl font-bold text-slate-900">{formatCurrency(metrics.totalRevenue)}</p>
+            <h3 className="text-sm font-medium text-white mb-1">Total Revenue</h3>
+            <p className="text-2xl font-bold text-white">{formatCurrency(metrics.totalRevenue)}</p>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-lg border border-slate-200 hover:shadow-xl transition-all duration-300 ml-[2rem] mb-[2rem]" style={{ marginLeft: '2rem',
-                    borderRadius: '1.5rem',
-                    padding: '1rem',
-                    paddingLeft: '1rem',
-                    backdropFilter: 'blur(12px)',
-                    border: '1px solid rgba(255, 255, 255, 0.07)',
-                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)',
-                    transition: 'all 0.3s ease',
-                    backgroundColor: '#3c3c3c',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow = '0 25px 50px -10px rgba(0, 0, 0, 0.25)';
-                    e.currentTarget.style.transform = 'scale(1.01)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)';
-                    e.currentTarget.style.transform = 'scale(1)';
-                  }}>
+          <div className="bg-[#3c3c3c] rounded-2xl p-6 backdrop-blur-md border border-white/10 shadow-xl hover:shadow-4xl transition-all duration-300 ml-[2rem] mb-[2rem]">
             <div className="flex items-center justify-between mb-4">
-              <div className="p-3 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-xl">
+              <div className="py-[0.6rem] px-[0.75rem] bg-gradient-to-r from-[#1e7c42] to-[#4ade80] rounded-xl">
                 <CheckCircle className="w-6 h-6 text-white" />
               </div>
             </div>
-            <h3 className="text-sm font-medium text-slate-600 mb-1">Paid Amount</h3>
-            <p className="text-2xl font-bold text-emerald-600">{formatCurrency(metrics.paidAmount)}</p>
+            <h3 className="text-sm font-medium text-white mb-1">Paid Amount</h3>
+            <p className="text-2xl font-bold text-white">{formatCurrency(metrics.paidAmount)}</p>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-lg border border-slate-200 hover:shadow-xl transition-all duration-300 ml-[2rem] mb-[2rem]" style={{ marginLeft: '2rem',
-                    borderRadius: '1.5rem',
-                    padding: '1rem',
-                    paddingLeft: '1rem',
-                    backdropFilter: 'blur(12px)',
-                    border: '1px solid rgba(255, 255, 255, 0.07)',
-                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)',
-                    transition: 'all 0.3s ease',
-                    backgroundColor: '#3c3c3c',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow = '0 25px 50px -10px rgba(0, 0, 0, 0.25)';
-                    e.currentTarget.style.transform = 'scale(1.01)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)';
-                    e.currentTarget.style.transform = 'scale(1)';
-                  }}>
+          <div className="bg-[#3c3c3c] rounded-2xl p-6 backdrop-blur-md border border-white/10 shadow-xl hover:shadow-4xl transition-all duration-300 ml-[2rem] mb-[2rem]">
             <div className="flex items-center justify-between mb-4">
-              <div className="p-3 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl">
+              <div className="py-[0.6rem] px-[0.75rem] bg-gradient-to-r from-[#92400e] to-[#fdba74] rounded-xl">
                 <Clock className="w-6 h-6 text-white" />
               </div>
             </div>
-            <h3 className="text-sm font-medium text-slate-600 mb-1">Pending Amount</h3>
-            <p className="text-2xl font-bold text-amber-600">{formatCurrency(metrics.pendingAmount)}</p>
+            <h3 className="text-sm font-medium text-white mb-1">Pending Amount</h3>
+            <p className="text-2xl font-bold text-white">{formatCurrency(metrics.pendingAmount)}</p>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-lg border border-slate-200 hover:shadow-xl transition-all duration-300 ml-[2rem] mb-[2rem]" style={{ marginLeft: '2rem',
-                    borderRadius: '1.5rem',
-                    padding: '1rem',
-                    paddingLeft: '1rem',
-                    backdropFilter: 'blur(12px)',
-                    border: '1px solid rgba(255, 255, 255, 0.07)',
-                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)',
-                    transition: 'all 0.3s ease',
-                    backgroundColor: '#3c3c3c',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow = '0 25px 50px -10px rgba(0, 0, 0, 0.25)';
-                    e.currentTarget.style.transform = 'scale(1.01)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)';
-                    e.currentTarget.style.transform = 'scale(1)';
-                  }}>
+          <div className="bg-[#3c3c3c] rounded-2xl p-6 backdrop-blur-md border border-white/10 shadow-xl hover:shadow-4xl transition-all duration-300 ml-[2rem] mb-[2rem]">
             <div className="flex items-center justify-between mb-4">
-              <div className="p-3 bg-gradient-to-r from-red-500 to-red-600 rounded-xl">
+              <div className="py-[0.6rem] px-[0.75rem] bg-gradient-to-r from-[#991b1b] to-[#f87171] rounded-xl">
                 <DollarSign className="w-6 h-6 text-white" />
               </div>
             </div>
-            <h3 className="text-sm font-medium text-slate-600 mb-1">Overdue Amount</h3>
-            <p className="text-2xl font-bold text-red-600">{formatCurrency(metrics.overdueAmount)}</p>
+            <h3 className="text-sm font-medium text-white mb-1">Overdue Amount</h3>
+            <p className="text-2xl font-bold text-white">{formatCurrency(metrics.overdueAmount)}</p>
           </div>
         </div>
 
         {/* Controls */}
-        <div className="bg-white rounded-2xl p-6 shadow-lg border border-slate-200 mb-6">
+        <div className="bg-[#3c3c3c] rounded-2xl px-4 py-4 shadow-lg border border-slate-200 mb-6 ml-8">
           <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
             <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
               <div className="relative">
@@ -313,14 +246,10 @@ export default function PaymentsPage() {
                 <option value="Overdue">Overdue</option>
               </select>
             </div>
-            <div className="flex gap-3">
-              <button className="flex items-center gap-2 px-4 py-3 text-slate-600 border border-slate-200 rounded-xl hover:bg-slate-50 transition-all">
-                <Download className="w-4 h-4" />
-                Export
-              </button>
+            <div className="flex gap-3 mb-3">
               <button
                 onClick={() => setShowAddForm(true)}
-                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg"
+                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-gray-900 to-gray-800 text-white rounded-xl hover:from-blue-800 hover:to-blue-900 transition-all shadow-lg"
               >
                 <Plus className="w-4 h-4" />
                 Add Payment
@@ -334,7 +263,7 @@ export default function PaymentsPage() {
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 p-4">
             <form
               onSubmit={handleAddPayment}
-              className="bg-white rounded-3xl p-8 max-w-xl w-full shadow-2xl border border-gray-200 overflow-auto max-h-[90vh]"
+              className="bg-[#3c3c3c] rounded-3xl p-8 max-w-xl w-full shadow-2xl border border-gray-200 overflow-auto max-h-[90vh]"
               noValidate
             >
               <h3 className="text-2xl font-bold mb-6">Add New Payment</h3>
@@ -423,25 +352,24 @@ export default function PaymentsPage() {
         )}
 
         {/* Payments Table */}
-        <div className="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-x-auto">
+        <div className="bg-[#3c3c3c] rounded-2xl shadow-lg border border-slate-200 overflow-x-auto ml-8">
           <table className="w-full min-w-[700px]">
-            <thead className="bg-slate-50 border-b border-slate-200">
+            <thead className="bg-[#3c3c3c] border-b border-slate-200">
               <tr>
-                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-900">Client</th>
-                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-900">Amount</th>
-                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-900">Status</th>
-                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-900">Date</th>
-                <th className="text-left py-4 px-6 text-sm font-semibold text-slate-900">Description</th>
+                <th className="text-left py-4 px-6 text-sm font-semibold text-white">Client</th>
+                <th className="text-left py-4 px-6 text-sm font-semibold text-white">Amount</th>
+                <th className="text-left py-4 px-6 text-sm font-semibold text-white">Status</th>
+                <th className="text-left py-4 px-6 text-sm font-semibold text-white">Date</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
               {filteredPayments.map((payment) => (
-                <tr key={payment.id} className="hover:bg-slate-50 transition-colors">
+                <tr key={payment.id} className="hover:bg-[#1a1a1a] transition-colors">
                   <td className="py-4 px-6">
-                    <div className="font-medium text-slate-900">{payment.client?.name || 'Unknown'}</div>
+                    <div className="font-medium text-white">{payment.client?.name || 'Unknown'}</div>
                   </td>
                   <td className="py-4 px-6">
-                    <div className="font-semibold text-slate-900">{formatCurrency(payment.amount)}</div>
+                    <div className="font-semibold text-white">{formatCurrency(payment.amount)}</div>
                   </td>
                   <td className="py-4 px-6">
                     <span
@@ -453,9 +381,8 @@ export default function PaymentsPage() {
                     </span>
                   </td>
                   <td className="py-4 px-6">
-                    <div className="text-slate-600">{formatDate(payment.date)}</div>
+                    <div className="text-white">{formatDate(payment.date)}</div>
                   </td>
-                  <td className="py-4 px-6 max-w-xs truncate">{payment.description || '-'}</td>
                 </tr>
               ))}
             </tbody>

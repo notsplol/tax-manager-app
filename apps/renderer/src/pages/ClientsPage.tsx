@@ -53,9 +53,9 @@ export default function ClientsPage() {
   const [searchQuery, setSearchQuery] = useState('');
 
   const navItems = [
-    { label: 'Clients', to: '/clients', icon: <Users className="w-5 h-5" style={{ marginRight: '0.55rem', marginLeft: '0.2rem'}}/> },
-    { label: 'Payments', to: '/payments', icon: <CreditCard className="w-5 h-5" style={{ marginRight: '0.55rem', marginLeft: '0.2rem'}}/> },
-    { label: 'Settings', to: '/settings', icon: <Settings className="w-5 h-5" style={{ marginRight: '0.55rem', marginLeft: '0.2rem'}}/> },
+    { label: 'Clients', to: '/clients', icon: <Users className="w-5 h-5 mr-[0.55rem]"/> },
+    { label: 'Payments', to: '/payments', icon: <CreditCard className="w-5 h-5 mr-[0.55rem]"/> },
+    { label: 'Settings', to: '/settings', icon: <Settings className="w-5 h-5 mr-[0.55rem]"/> },
   ];
 
   const filteredClients = clients.filter((client) =>
@@ -112,13 +112,13 @@ export default function ClientsPage() {
 
   return (
     
-    <div className="w-full min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 grid grid-cols-[16rem_1fr] gap-x-20">
+    <div className="w-full min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 grid grid-cols-[0rem_1fr] gap-x-20">
       {/* Sidebar */}
-      <aside className="fixed h-screen bg-[#3c3c3c] backdrop-blur-md p-6 flex flex-col shadow-xl shadow-black/10 w-[14rem]">
+      <aside className="fixed h-screen bg-[#3c3c3c] backdrop-blur-md p-6 flex flex-col shadow-xl shadow-black/10 w-[15rem]">
         <div className="mb-12">
           <div className="flex items-center space-x-3 mb-2">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
-              <User className="w-7 h-7 text-white" style={{ marginRight: '0.35rem', marginLeft: '1rem'}} />
+            <div className="w-12 h-12 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl flex items-center justify-center shadow-lg">
+              <User className="w-7 h-7 text-white" />
             </div>
             <h2 className="text-2xl font-extrabold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text dark:text-white">
               Vijay Patel
@@ -139,7 +139,7 @@ export default function ClientsPage() {
                 border: 'none',
                 padding: '0.75rem 1rem',
                 borderRadius: '0.75rem',
-                width: '82%',
+                width: '100%',
                 textDecoration: 'none',
                 color: 'white',
                 fontWeight: 500,
@@ -164,18 +164,18 @@ export default function ClientsPage() {
       </aside>
 
       {/* Main content */}
-      <main className="ml-[14rem] flex-1 overflow-visible px-10 py-10">
+      <main className="ml-[14rem] flex-1 px-10 py-10">
         <div className="max-w-7xl mx-auto px-8 py-12 overflow-visible grid gap-6">
           <div className="mb-10">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-3xl font-extrabold mb-10 text-gray-900 dark:text-white"> Client Management</h1>
+                <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">Client Management</h1>
               </div>
               <button
                 onClick={() => setShowAddForm(!showAddForm)}
-                className="group flex items-center px-8 py-4 ml-4 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold rounded-2xl shadow-xl shadow-blue-500/30 hover:shadow-2xl hover:shadow-blue-500/40 transition-all duration-300 transform hover:scale-[1.01] hover:-translate-y-1"
+                className="group flex items-center px-8 py-4 ml-4  from-gray-900 to-gray-800 hover:from-gray-900 hover:to-gray-800 text-white font-bold rounded-2xl shadow-xl shadow-black-500/30 hover:shadow-2xl hover:shadow-black-500/40 transition-all duration-300 transform hover:scale-[1.01] hover:-translate-y-1"
               >
-                <Plus className="w-6 h-6 mr-3 transition-transform group-hover:rotate-180" />
+                <Plus className="w-4 h-6 mr-2 transition-transform group-hover:rotate-180" />
                 Add New Client
               </button>
             </div>
@@ -188,7 +188,7 @@ export default function ClientsPage() {
     className="mb-[1rem] bg-[#272727]/80 backdrop-blur-xl rounded-[1rem] p-8 border border-white/10 shadow-2xl shadow-black/30 text-white ml-[2rem]"
     noValidate
   >
-    <div className="flex items-center justify-between mb-[-0.5rem] ml-[1rem]">
+    <div className="flex items-center justify-between">
       <h3 className="text-2xl font-bold flex items-center">
         <Plus className="w-7 h-7 mr-3 text-emerald-400" />
         Add New Client
@@ -210,7 +210,7 @@ export default function ClientsPage() {
           placeholder="Full Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-[40rem] pl-4 pr-4 py-[0.5rem] bg-[#474747]/60 border border-white/20 rounded-[0.3rem] focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500 transition-all duration-300 text-white placeholder-gray-300 font-medium"
+          className="pl-4 pr-4 py-[0.5rem] bg-[#474747]/60 border border-white/20 rounded-[0.3rem] focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500 transition-all duration-300 text-white placeholder-gray-300 font-medium"
           required
         />
       </div>
@@ -222,7 +222,7 @@ export default function ClientsPage() {
           placeholder="Email Address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-[40rem] pl-4 pr-4 py-[0.5rem] bg-[#474747]/60 border border-white/20 rounded-[0.3rem] focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500 transition-all duration-300 text-white placeholder-gray-300 font-medium"
+          className="pl-4 pr-4 py-[0.5rem] bg-[#474747]/60 border border-white/20 rounded-[0.3rem] focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500 transition-all duration-300 text-white placeholder-gray-300 font-medium"
           required
         />
       </div>
@@ -234,7 +234,7 @@ export default function ClientsPage() {
           placeholder="Phone Number"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
-          className="w-[40rem] pl-4 pr-4 py-[0.5rem] bg-[#474747]/60 border border-white/20 rounded-[0.3rem] focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500 transition-all duration-300 text-white placeholder-gray-300 font-medium"
+          className="pl-4 pr-4 py-[0.5rem] bg-[#474747]/60 border border-white/20 rounded-[0.3rem] focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500 transition-all duration-300 text-white placeholder-gray-300 font-medium"
         />
       </div>
 
@@ -249,7 +249,7 @@ export default function ClientsPage() {
         </button>
         <button
           type="submit"
-          className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 transition-all duration-300 transform hover:scale-105 flex items-center justify-center mb-[0.3rem]"
+          className="px-6 py-3 text-white font-bold rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 flex items-center justify-center mb-[0.3rem]"
         >
           <Check className="w-5 h-5 mr-[0.4rem]" />
           Add Client
@@ -278,23 +278,22 @@ export default function ClientsPage() {
 
               {/* SEARCH INPUT */}
               <div className="px-4 mb-8 flex justify-start">
-                <div className="relative w-full max-w-md rounded-full shadow-md">
+                <div className="relative w-full max-w-md rounded-full">
                   <input
                     type="text"
                     placeholder="Search clients..."
                     className="w-[50rem] pl-10 pr-4 py-3 rounded-[0.5rem] bg-white/90 backdrop-blur border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition-all duration-200 text-gray-800 placeholder-gray-400"
-                    style={{padding: '10px', marginLeft: "2rem", marginBottom: "0.1rem"}}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
-                  <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" style={{marginTop: "0.5rem", marginLeft: '0.5rem'}} />
-                  <p className="text-[0.9rem] text-gray-600 font-[300]" style={{marginLeft: '2.5rem', marginBottom:'2rem'}}>
+                  <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400 mt-[0.15rem]" />
+                  <p className="text-[0.9rem] text-gray-300 font-[450] ml-[1rem] mt-[1rem]">
                     You have {filteredClients.length} {filteredClients.length === 1 ? 'client' : 'clients'}
                   </p>
                 </div>
               </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr', rowGap: '1.5rem'}}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', rowGap: '2rem', width: '50rem'}}>
               {clients.filter((client) =>
                 client.name.toLowerCase().includes(searchQuery.toLowerCase())
                   )
@@ -335,23 +334,23 @@ export default function ClientsPage() {
                   {/* Client Info */}
                   <div className="mb-8">
                     <div className="flex items-center mb-6 gap-4">
-                      <div className="w-16 h-16 bg-gradient-to-br from-blue-400 via-indigo-500 to-purple-500 rounded-3xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
-                        
+                      <div className="w-16 h-16 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 rounded-3xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
+                        <User className="w-7 h-7"/>
                       </div>
                       <div className="flex flex-col justify-center">
-                        <h3 className="text-xl font-bold text-gray-900 mb-[-1rem]">{client.name}</h3>
-                        <p className="text-sm text-gray-500 font-medium">Client ID: #{client.id}</p>
+                        <h3 className="text-xl font-bold text-white">{client.name}</h3>
+                        <p className="text-sm text-white-500 font-medium">Client ID: #{client.id}</p>
                       </div>
                     </div>
 
                     <div className="space-y-3">
                       <div className="flex items-center text-gray-700 bg-gray-50 rounded-xl p-3">
-                        <AtSign className="w-5 h-5 mr-3 text-blue-500" style={{ marginRight: '0.35rem', marginBottom: '0.5rem', paddingTop: '0.75rem'}}/>
+                        <AtSign className="w-5 h-5 mr-3 text-blue-500"/>
                         <span className="font-medium">{client.email}</span>
                       </div>
                       {client.phone && (
                         <div className="flex items-center text-gray-700 bg-gray-50 rounded-xl p-3">
-                          <Phone className="w-5 h-5 mr-3 text-green-500" style={{ marginRight: '0.35rem'}}/>
+                          <Phone className="w-5 h-5 mr-3 text-green-500"/>
                           <span className="font-medium">{client.phone}</span>
                         </div>
                       )}
@@ -365,7 +364,7 @@ export default function ClientsPage() {
                         setSelectedClient(client);
                         setActiveEmailClientId(activeEmailClientId === client.id ? null : client.id);
                       }}
-                      className="flex-1 flex items-center justify-center px-4 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
+                      className="flex-1 flex items-center justify-center px-4 py-3 bg-gradient-to-br from-gray-900 to-gray-800 hover:from-blue-700 hover:to-indigo-800 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
                     >
                       <Mail className="w-4 h-4 mr-2" style={{ marginRight: '0.35rem'}}/>
                       Email
@@ -375,7 +374,7 @@ export default function ClientsPage() {
                         setSelectedClient(client);
                         setActivePaymentClientId(activePaymentClientId === client.id ? null : client.id);
                       }}
-                      className="flex-1 flex items-center justify-center px-4 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
+                      className="flex-1 flex items-center justify-center px-4 py-3 bg-gradient-to-br from-gray-900 to-gray-800 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
                     >
                       <DollarSign className="w-4 h-4 mr-2" />
                       Payment
@@ -390,7 +389,7 @@ export default function ClientsPage() {
                           handleDeleteClient(client.id);
                         }
                       }}
-                      className="px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
+                      className="px-4 py-3 bg-gradient-to-br from-gray-900 to-gray-800 hover:from-red-600 hover:to-red-700 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
