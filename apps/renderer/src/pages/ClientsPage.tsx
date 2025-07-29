@@ -27,7 +27,7 @@ const emailTemplates = [
     subject: 'Attached: Tax {{year}} Documents',
     body: `Namaste {{name}},
 
-Please find attached your tax documents {{year}}; We suggest you keep them safe for the next six years.
+Please find attached your tax documents for {{year}}; We suggest you keep them safe for the next six years.
 If you have any further questions, contact us and we'll be happy to assist.
 
 Thank you for filing your taxes with us, we hope to see you next year!
@@ -120,7 +120,7 @@ export default function ClientsPage() {
             <div className="w-12 h-12 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl flex items-center justify-center shadow-lg">
               <User className="w-7 h-7 text-white" />
             </div>
-            <h2 className="text-2xl font-extrabold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text dark:text-white">
+            <h2 className="text-2xl font-semibold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text dark:text-white">
               Vijay Patel
             </h2>
           </div>
@@ -168,12 +168,12 @@ export default function ClientsPage() {
         <div className="max-w-7xl mx-auto px-8 py-12 overflow-visible grid gap-6">
           <div className="mb-10">
             <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">Client Management</h1>
+              <div> 
+                <h1 className="text-3xl font-semibold text-gray-900 dark:text-white tracking-light">Client Management</h1>
               </div>
               <button
                 onClick={() => setShowAddForm(!showAddForm)}
-                className="group flex items-center px-8 py-4 ml-4  from-gray-900 to-gray-800 hover:from-gray-900 hover:to-gray-800 text-white font-bold rounded-2xl shadow-xl shadow-black-500/30 hover:shadow-2xl hover:shadow-black-500/40 transition-all duration-300 transform hover:scale-[1.01] hover:-translate-y-1"
+                className="group flex items-center px-8 py-4 ml-4  from-gray-900 to-gray-800 hover:from-gray-900 hover:to-gray-800 text-white font-bold rounded-2xl shadow-2xl shadow-black-500/30 hover:shadow-2xl hover:shadow-black-500/40 transition-all duration-300 transform hover:scale-[1.01] hover:-translate-y-1"
               >
                 <Plus className="w-4 h-6 mr-2 transition-transform group-hover:rotate-180" />
                 Add New Client
@@ -338,7 +338,7 @@ export default function ClientsPage() {
                         <User className="w-7 h-7"/>
                       </div>
                       <div className="flex flex-col justify-center">
-                        <h3 className="text-xl font-bold text-white">{client.name}</h3>
+                        <h3 className="text-xl font-light text-white">{client.name}</h3>
                         <p className="text-sm text-white-500 font-medium">Client ID: #{client.id}</p>
                       </div>
                     </div>

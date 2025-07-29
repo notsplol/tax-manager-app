@@ -1,14 +1,12 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import {
   Search,
-  Plus,
-  Download,
   TrendingUp,
   CheckCircle,
   Clock,
   DollarSign,
-  Link,
-  Users,
+  Trash2,
+  ArrowLeft
 } from 'lucide-react';
 
 type Client = {
@@ -35,7 +33,6 @@ export default function PaymentsPage() {
   // Search/filter state
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'Paid' | 'Pending' | 'Overdue'>('all');
-  const [clientSearch, setClientSearch] = useState('');
   
   // Add payment form state
   const [showAddForm, setShowAddForm] = useState(false);
@@ -108,6 +105,8 @@ export default function PaymentsPage() {
     }
   };
 
+  
+
   // Format currency
   const formatCurrency = (amount?: number) => {
     if (amount === undefined) return '-';
@@ -162,11 +161,55 @@ export default function PaymentsPage() {
     }
   }
 
+  const handleStatusChange = async (paymentId: number, newStatus: 'Paid' | 'Pending' | 'Overdue') => {
+  try {
+    setPayments((prev) =>
+      prev.map((p) =>
+        p.id === paymentId ? { ...p, status: newStatus } : p
+      )
+    );
+
+    await fetch(`http://localhost:4000/payments/${paymentId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: newStatus }),
+    });
+  } catch (err) {
+    console.error('Failed to update payment status', err);
+  }
+};
+
+const handleDeletePayment = async (paymentId: number) => {
+  if (!confirm('Are you sure you want to delete this payment?')) return;
+
+  try {
+    // Optimistic UI update: remove from local state immediately
+    setPayments((prev) => prev.filter((p) => p.id !== paymentId));
+
+    // Call backend API to delete payment
+    const res = await fetch(`http://localhost:4000/api/payments/${paymentId}`, {
+      method: 'DELETE',
+    });
+
+    if (!res.ok) {
+      throw new Error('Failed to delete payment');
+    }
+  } catch (error) {
+    alert('Error deleting payment. Please try again.');
+    console.error(error);
+
+    const paymentsRes = await fetch('http://localhost:4000/api/payments');
+    const paymentsData = await paymentsRes.json();
+    setPayments(paymentsData);
+  }
+};
+
   if (loading) return <p className="p-6 text-gray-500">Loading...</p>;
   if (error) return <p className="p-6 text-red-500">{error}</p>;
 
   return (
     <div className="min-h-screen bg-[#272727] text-white">
+      
       <div className="max-w-7xl mx-auto p-6">
         {/* Header */}
         <div className="mb-[2rem]">
@@ -246,111 +289,21 @@ export default function PaymentsPage() {
                 <option value="Overdue">Overdue</option>
               </select>
             </div>
-            <div className="flex gap-3 mb-3">
-              <button
-                onClick={() => setShowAddForm(true)}
-                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-gray-900 to-gray-800 text-white rounded-xl hover:from-blue-800 hover:to-blue-900 transition-all shadow-lg"
-              >
-                <Plus className="w-4 h-4" />
-                Add Payment
-              </button>
-            </div>
+          
           </div>
         </div>
 
-        {/* Add Payment Form Modal */}
-        {showAddForm && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 p-4">
-            <form
-              onSubmit={handleAddPayment}
-              className="bg-[#3c3c3c] rounded-3xl p-8 max-w-xl w-full shadow-2xl border border-gray-200 overflow-auto max-h-[90vh]"
-              noValidate
-            >
-              <h3 className="text-2xl font-bold mb-6">Add New Payment</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div>
-                  <label className="block mb-1 font-semibold">Client *</label>
-                  <select
-                    value={clientId ?? ''}
-                    onChange={(e) => setClientId(Number(e.target.value))}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                  >
-                    <option value="" disabled>
-                      Select client
-                    </option>
-                    {clients.map((c) => (
-                      <option key={c.id} value={c.id}>
-                        {c.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label className="block mb-1 font-semibold">Amount *</label>
-                  <input
-                    type="number"
-                    step="0.01"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                  />
-                </div>
-                <div>
-                  <label className="block mb-1 font-semibold">Status *</label>
-                  <select
-                    value={status}
-                    onChange={(e) => setStatus(e.target.value as 'Paid' | 'Pending' | 'Overdue')}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                  >
-                    <option value="Paid">Paid</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Overdue">Overdue</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block mb-1 font-semibold">Date *</label>
-                  <input
-                    type="date"
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                  />
-                </div>
-                <div className="md:col-span-2">
-                  <label className="block mb-1 font-semibold">Description</label>
-                  <input
-                    type="text"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    placeholder="Optional"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-                  />
-                </div>
-              </div>
 
-              <div className="flex justify-end space-x-4">
-                <button
-                  type="button"
-                  onClick={() => setShowAddForm(false)}
-                  className="px-6 py-3 rounded-2xl border border-gray-300 text-gray-600 hover:bg-gray-100 transition"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-2xl font-semibold hover:from-blue-700 hover:to-blue-800 transition shadow-lg"
-                >
-                  Add Payment
-                </button>
-              </div>
-            </form>
-          </div>
-        )}
-
+        <div className="ml-8 mt-6 mb-4">
+          <a
+            href="/clients"
+            className="inline-flex items-center text-sm text-blue-400 hover:text-blue-300 transition-colors"
+          >
+          <ArrowLeft className="w-4 h-4 mr-1" />
+            Back to Clients
+          </a>
+        </div>
+        
         {/* Payments Table */}
         <div className="bg-[#3c3c3c] rounded-2xl shadow-lg border border-slate-200 overflow-x-auto ml-8">
           <table className="w-full min-w-[700px]">
@@ -360,6 +313,7 @@ export default function PaymentsPage() {
                 <th className="text-left py-4 px-6 text-sm font-semibold text-white">Amount</th>
                 <th className="text-left py-4 px-6 text-sm font-semibold text-white">Status</th>
                 <th className="text-left py-4 px-6 text-sm font-semibold text-white">Date</th>
+                <th className="text-left py-4 px-6 text-sm font-semibold text-white">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
@@ -372,19 +326,36 @@ export default function PaymentsPage() {
                     <div className="font-semibold text-white">{formatCurrency(payment.amount)}</div>
                   </td>
                   <td className="py-4 px-6">
-                    <span
-                      className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(
+                    <select
+                      value={payment.status}
+                      onChange={(e) =>
+                        handleStatusChange(payment.id, e.target.value as 'Paid' | 'Pending' | 'Overdue')
+                      }
+                      className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(
                         payment.status,
-                      )}`}
+                      )} bg-transparent text-white`}
                     >
-                      {payment.status}
-                    </span>
+                      < option value="Paid">Paid</option>
+                      <option value="Pending">Pending</option>
+                      <option value="Overdue">Overdue</option>
+                    </select>
                   </td>
                   <td className="py-4 px-6">
                     <div className="text-white">{formatDate(payment.date)}</div>
                   </td>
+                  <td className="py-4 px-6">
+                    <button
+                      onClick={() => handleDeletePayment(payment.id)}
+                      className="text-white hover:text-red-600"
+                      title="Delete payment"
+                      aria-label="Delete payment"
+                    >
+                      <Trash2 className="w-5 h-5" />
+                    </button>
+                  </td>
                 </tr>
               ))}
+              
             </tbody>
           </table>
         </div>
