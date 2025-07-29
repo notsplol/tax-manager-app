@@ -114,7 +114,7 @@ export default function ClientsPage() {
     
     <div className="w-full min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 grid grid-cols-[16rem_1fr] gap-x-20">
       {/* Sidebar */}
-      <aside className="fixed h-screen bg-[#2f2f2f] backdrop-blur-md p-6 flex flex-col shadow-xl shadow-black/10 w-[13.7rem]">
+      <aside className="fixed h-screen bg-[#3c3c3c] backdrop-blur-md p-6 flex flex-col shadow-xl shadow-black/10 w-[14rem]">
         <div className="mb-12">
           <div className="flex items-center space-x-3 mb-2">
             <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
@@ -321,7 +321,7 @@ export default function ClientsPage() {
                     border: '1px solid rgba(255, 255, 255, 0.07)',
                     boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)',
                     transition: 'all 0.3s ease',
-                    backgroundColor: '#2f2f2f',
+                    backgroundColor: '#3c3c3c',
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.boxShadow = '0 25px 50px -10px rgba(0, 0, 0, 0.25)';
