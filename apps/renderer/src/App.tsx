@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ClientsPage from './pages/ClientsPage';
 import PaymentsPage from './pages/PaymentsPage';
-import ClientPage from './pages/ClientPage';
+import ClientPage from './pages/ClientProfile';
 
 export default function App() {
   return (

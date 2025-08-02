@@ -31,9 +31,10 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.11",
-    "@types/express": "^4.17.23",
+    "@types/express": "^5.0.3",
+    "date-fns": "^4.1.0",
     "dotenv": "^16.5.0",
-    "express": "^4.21.2",
+    "express": "^5.1.0",
     "lucide-react": "^0.526.0",
     "react-router-dom": "^7.6.3",
     "tailwindcss": "^4.1.11",
