@@ -42,3 +42,15 @@ export async function deleteClient(id: number): Promise<void> {
   });
   if (!res.ok) throw new Error('Failed to delete client');
 }
+
+export async function fetchClientById(id: number): Promise<Client> {
+  const res = await fetch(`${API_URL}/clients/${id}`);
+  if (!res.ok) throw new Error('Failed to fetch client');
+  return res.json();
+}
+
+export async function fetchPaymentsByClientId(id: number) {
+  const res = await fetch(`${API_URL}/clients/${id}/payments`);
+  if (!res.ok) throw new Error('Failed to fetch payments');
+  return res.json();
+}

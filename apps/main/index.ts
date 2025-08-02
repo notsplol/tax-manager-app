@@ -1,7 +1,8 @@
-import express from 'express'
+import express from 'express';
 import cors from 'cors'
 import dotenv from 'dotenv'
 import { PrismaClient } from './generated/prisma'
+
 
 dotenv.config()
 
@@ -19,19 +20,42 @@ app.use(express.json())
 
 const PORT = process.env.PORT || 4000
 
-//temp
-app.get('/test-insert', async (req, res) => {
-  const test = await prisma.client.create({
-    data: {
-      name: 'Test User',
-      email: 'test@example.com',
-      phone: null,
-    },
-  });
-  res.json(test);
+//Get specific client payments
+app.get('/clients/:id/payments', async (req, res) => {
+  const clientId = Number(req.params.id);
+  try {
+    const payments = await prisma.payment.findMany({
+      where: { clientId },
+      orderBy: { date: 'desc' }, //to order payments by date
+    });
+    res.json(payments);
+  } catch (error) {
+    console.error('Failed to fetch payments for client:', error);
+    res.status(500).json({ error: 'Failed to fetch payments for client' });
+  }
 });
 
-// --- CRUD routes for Client example ---
+//Get specific client
+app.get('/clients/:id', (async(req, res) => {
+  const clientId = Number(req.params.id);
+  if (isNaN(clientId)) {
+    return res.status(400).json({ error: 'Invalid client ID' });
+  }
+
+  const client = await prisma.client.findUnique({
+    where: { id: clientId },
+    include: { payments: true}
+  });
+
+  if (!client) {
+    return res.status(404).json({ error: 'Client not found' });
+  }
+
+  res.json(client);
+}) as express.RequestHandler); //To solve weird TS bug
+
+
+
 // GET all clients
 app.get('/clients', async (req, res) => {
   try {
@@ -134,3 +158,6 @@ app.put('/api/payments/:id', async (req, res) => {
     res.status(500).json({ error: 'Failed to update payment status' });
   }
 });
+
+
+

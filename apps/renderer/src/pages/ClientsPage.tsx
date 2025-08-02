@@ -19,6 +19,7 @@ import {
 
 import type { Client } from '../../../main/generated/prisma';
 import { fetchClients, addClient, deleteClient } from '../api/clients';
+import { useNavigate } from 'react-router-dom';
 
 const emailTemplates = [
   {
@@ -51,6 +52,7 @@ export default function ClientsPage() {
   const [activePaymentClientId, setActivePaymentClientId] = useState<number | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
 
   const navItems = [
     { label: 'Clients', to: '/clients', icon: <Users className="w-5 h-5 mr-[0.55rem]"/> },
@@ -330,6 +332,9 @@ export default function ClientsPage() {
                     e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)';
                     e.currentTarget.style.transform = 'scale(1)';
                   }}
+                  onClick={() => navigate(`/clients/${client.id}`
+
+                  )}
                 > 
                   {/* Client Info */}
                   <div className="mb-8">
@@ -360,7 +365,8 @@ export default function ClientsPage() {
                   {/* Action Buttons */}
                   <div className="flex flex-wrap gap-3 mb-6">
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         setSelectedClient(client);
                         setActiveEmailClientId(activeEmailClientId === client.id ? null : client.id);
                       }}
@@ -370,7 +376,8 @@ export default function ClientsPage() {
                       Email
                     </button>
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         setSelectedClient(client);
                         setActivePaymentClientId(activePaymentClientId === client.id ? null : client.id);
                       }}
@@ -380,7 +387,8 @@ export default function ClientsPage() {
                       Payment
                     </button>
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         if (
                           window.confirm(
                             `Are you sure you want to delete ${client.name}? This will also delete their payments.`
@@ -397,6 +405,7 @@ export default function ClientsPage() {
 
                   {/* Inline Email Form */}
                   {activeEmailClientId === client.id && (
+                    <form onSubmit={(e) => e.preventDefault()} onClick={(e) => e.stopPropagation()}>
                     <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl p-6 border border-blue-200 shadow-inner space-y-4">
                       <label className="block mb-2 text-sm font-semibold text-gray-700">
                         Select Template
@@ -432,14 +441,15 @@ export default function ClientsPage() {
                       )}
 
                       <div className="flex justify-end gap-3">
-                        <button
-                          onClick={() => setActiveEmailClientId(null)}
+                        <button type="button"
+                          onClick={(e) => {e.stopPropagation(); setActiveEmailClientId(null)}}
                           className="px-4 py-2 rounded bg-gray-400 text-white font-semibold hover:bg-gray-500 transition"
                         >
                           Cancel
                         </button>
-                        <button
-                          onClick={() => {
+                        <button type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
                             const selected = emailTemplates.find((t) => t.id === selectedTemplateId);
                             if (selected && selectedClient) {
                               const filled = fillTemplate(selected);
@@ -456,12 +466,13 @@ export default function ClientsPage() {
                         </button>
                       </div>
                     </div>
-                  )}
+                  </form>
+                  )} 
 
                   {/* Inline Payment Form */}
                   {activePaymentClientId === client.id && (
                     <div className="bg-gradient-to-br from-green-50 to-emerald-100 rounded-2xl p-6 border border-green-200 shadow-inner space-y-4">
-                      <form
+                      <form onClick={(e) => e.stopPropagation()}
                         onSubmit={async (e) => {
                           e.preventDefault();
                           const form = e.currentTarget;
@@ -519,13 +530,14 @@ export default function ClientsPage() {
                         <div className="flex justify-end gap-3">
                           <button
                             type="button"
-                            onClick={() => setActivePaymentClientId(null)}
+                            onClick={(e) => { e.stopPropagation(); setActivePaymentClientId(null); }}
                             className="px-4 py-2 bg-gray-400 text-white rounded font-semibold hover:bg-gray-500 transition"
                           >
                             Cancel
                           </button>
                           <button
                             type="submit"
+                            onClick={(e) => { e.stopPropagation()}}
                             className="px-4 py-2 bg-green-600 text-white rounded font-semibold hover:bg-green-700 transition"
                           >
                             Add
