@@ -126,58 +126,29 @@ export default function PaymentsPage() {
       year: 'numeric',
     });
   };
+ 
 
-  // Handle add payment submit
-  async function handleAddPayment(e: React.FormEvent) {
-    e.preventDefault();
-    if (!clientId || !amount || !date) {
-      alert('Please fill all required fields');
-      return;
-    }
-    try {
-      const res = await fetch('http://localhost:4000/api/payments', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          clientId,
-          amount: parseFloat(amount),
-          status,
-          date,
-          description,
-        }),
-      });
-      if (!res.ok) throw new Error('Failed to add payment');
-      const newPayment = await res.json();
-      setPayments([...payments, newPayment]);
-      // Reset form
-      setClientId(null);
-      setAmount('');
-      setStatus('Paid');
-      setDate('');
-      setDescription('');
-      setShowAddForm(false);
-    } catch {
-      alert('Failed to add payment.');
-    }
-  }
-
-  const handleStatusChange = async (paymentId: number, newStatus: 'Paid' | 'Pending' | 'Overdue') => {
+ const handleStatusChange = async (paymentId: number, newStatus: 'Paid' | 'Pending' | 'Overdue') => {
   try {
+    await fetch(`http://localhost:4000/api/payments/${paymentId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ status: newStatus }),
+    });
+
+    // Update local state for immediate feedback
     setPayments((prev) =>
       prev.map((p) =>
         p.id === paymentId ? { ...p, status: newStatus } : p
       )
     );
-
-    await fetch(`http://localhost:4000/payments/${paymentId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status: newStatus }),
-    });
   } catch (err) {
     console.error('Failed to update payment status', err);
   }
 };
+
 
 const handleDeletePayment = async (paymentId: number) => {
   if (!confirm('Are you sure you want to delete this payment?')) return;

@@ -117,3 +117,20 @@ app.delete('/api/payments/:id', async (req, res) => {
     res.status(500).json({ error: 'Failed to delete payment' });
   }
 });
+
+// Payment Status Change
+app.put('/api/payments/:id', async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  try {
+    const updatedPayment = await prisma.payment.update({
+      where: { id: Number(id) },
+      data: { status },
+    });
+
+    res.json(updatedPayment);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update payment status' });
+  }
+});

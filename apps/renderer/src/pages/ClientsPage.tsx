@@ -169,7 +169,7 @@ export default function ClientsPage() {
           <div className="mb-10">
             <div className="flex items-center justify-between">
               <div> 
-                <h1 className="text-3xl font-semibold text-gray-900 dark:text-white tracking-light">Client Management</h1>
+                <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white tracking-light">Client Management</h1>
               </div>
               <button
                 onClick={() => setShowAddForm(!showAddForm)}
