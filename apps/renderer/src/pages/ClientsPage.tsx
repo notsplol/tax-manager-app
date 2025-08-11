@@ -20,6 +20,7 @@ import {
 import type { Client } from '../../../main/generated/prisma';
 import { fetchClients, addClient, deleteClient } from '../api/clients';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const emailTemplates = [
   {
@@ -103,14 +104,39 @@ export default function ClientsPage() {
     }
   }
 
-  function fillTemplate(template: { subject: string; body: string }) {
-    const taxYear = (new Date().getFullYear() - 1).toString();
-    const clientFirstName = selectedClient?.name.split(' ')[0] || '';
-    return {
-      subject: template.subject.replace(/{{year}}/g, taxYear).replace(/{{name}}/g, clientFirstName),
-      body: template.body.replace(/{{year}}/g, taxYear).replace(/{{name}}/g, clientFirstName),
-    };
+  function fillTemplate(template: { subject: string; body: string }, clientName: string) {
+  const taxYear = (new Date().getFullYear() - 1).toString();
+  const clientFirstName = clientName.split(' ')[0] || '';
+  return {
+    subject: template.subject.replace(/{{year}}/g, taxYear).replace(/{{name}}/g, clientFirstName),
+    body: template.body.replace(/{{year}}/g, taxYear).replace(/{{name}}/g, clientFirstName),
+  };
+}
+
+
+const handleSendEmail = async () => {
+  if (!selectedTemplateId || !selectedClient) return;
+
+  const selected = emailTemplates.find((t) => t.id === selectedTemplateId);
+  if (!selected) return;
+
+  const filled = fillTemplate(selected, selectedClient.name);
+
+  try {
+    await axios.post('http://localhost:4000/api/email/send-email', {
+      to: selectedClient.email,
+      subject: filled.subject,
+      body: filled.body,
+    });
+
+    alert('Email sent successfully!');
+    setSelectedTemplateId(null);
+    setActiveEmailClientId(null);
+  } catch (error) {
+    console.error('Error sending email:', error);
+    alert('Failed to send email. Please try again.');
   }
+};
 
   return (
     
@@ -432,7 +458,8 @@ export default function ClientsPage() {
                           </label>
                           <textarea
                             value={fillTemplate(
-                              emailTemplates.find((t) => t.id === selectedTemplateId)!
+                              emailTemplates.find((t) => t.id === selectedTemplateId)!,
+                              selectedClient?.name || ''
                             ).body}
                             className="w-full min-h-[170px] p-4 rounded border bg-white border-2 border-gray-200 mb-4 resize-none text-sm text-gray-900 font-medium"
                             readOnly
@@ -450,15 +477,7 @@ export default function ClientsPage() {
                         <button type="button"
                           onClick={(e) => {
                             e.stopPropagation();
-                            const selected = emailTemplates.find((t) => t.id === selectedTemplateId);
-                            if (selected && selectedClient) {
-                              const filled = fillTemplate(selected);
-                              alert(
-                                `Sending email to ${selectedClient.email}\n\nSubject: ${filled.subject}\n\n${filled.body}`
-                              );
-                              setSelectedTemplateId(null);
-                              setActiveEmailClientId(null);
-                            }
+                            handleSendEmail();
                           }}
                           className="px-4 py-2 rounded bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
                         >
