@@ -45,10 +45,10 @@ This repository uses TypeScript, React (renderer) and Tailwind CSS. The project 
 Getting started (for potential contributors)
 
 1. Clone the repo:
-
-    `git clone https://github.com/notsplol/tax-manager-app.git`
-    `cd tax-manager-app`
-
+```
+git clone https://github.com/notsplol/tax-manager-app.git
+cd tax-manager-app
+```
 2. Install dependencies (root and renderer):
 
    # install root dependencies:
@@ -56,11 +56,11 @@ Getting started (for potential contributors)
    `npm install`
 
    # install renderer dependencies (optional, if you work on the renderer explicitly):
-
-    `cd apps/renderer`
-    `npm install`
-    `cd -`
-
+   ```
+   cd apps/renderer
+   npm install
+   cd -
+   ```
 3. Run the app in development mode:
 
    # Use the root script to run both the main backend and the renderer dev server
