@@ -13,9 +13,9 @@ This app is a client management system designed with tax professionals and accou
 - **Reporting**: Generate reports on client status, outstanding documents, and revenue tracking (To do)
 
 ## Current UI
-![App screenshot](./docs/images/tax-app1.png)
-![App screenshot](./docs/images/tax-app2.png)
-![App screenshot](./docs/images/tax-app3.png)
+![App screenshot](./apps/docs/images/tax-app1.png)
+![App screenshot](./apps/docs/images/tax-app2.png)
+![App screenshot](./apps/docs/images/tax-app3.png)
 
 
 ## Target Users
