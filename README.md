@@ -6,6 +6,8 @@ This app is a client management system designed with tax professionals and accou
 
 ## Key Features
 - **Client Database**: Maintain detailed client profiles with contact information, tax history, and notes
+- **Track Payments**: Payments Dashboard to keep track of paid, pending, and overdue payments from clients
+- **Send Emails**: Send automated emails to clients through Resend
 - **Document Management**: Upload, organize, and securely store tax documents (In development)
 - **Tax Year Tracking**: Manage multiple tax years and track preparation status for each client (In development)
 - **Deadline Management**: Built-in calendar and reminder system for important tax deadlines (To do)
