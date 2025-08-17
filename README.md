@@ -1,20 +1,23 @@
 # tax-manager-app
-This app is still in development.
+This app is actively in development.
 
 # Overview
 This app is a client management system designed with tax professionals and accounting firms in mind. It aims to provide an ultimate solution for managing client information, tracking tax documents, organizing financial records, and streamlining the tax preparation workflow.
 
 ## Key Features
 - **Client Database**: Maintain detailed client profiles with contact information, tax history, and notes
-- **Document Management**: Upload, organize, and securely store tax documents (W-2s, 1099s, receipts, etc.) (In development)
+- **Document Management**: Upload, organize, and securely store tax documents (In development)
 - **Tax Year Tracking**: Manage multiple tax years and track preparation status for each client (In development)
 - **Deadline Management**: Built-in calendar and reminder system for important tax deadlines (To do)
 - **Secure Storage**: Client data protection with encryption and secure authentication (To do)
 - **Reporting**: Generate reports on client status, outstanding documents, and revenue tracking (To do)
 
+
 ## Current UI
 ![App screenshot](./docs/images/tax-app-screen1)
+
 ![App screenshot](./docs/images/tax-app-screen2)
+
 ![App screenshot](./docs/images/tax-app-screen3)
 
 
@@ -30,36 +33,39 @@ This app is a client management system designed with tax professionals and accou
 - **Desktop App**: Electron-based application for cross-platform compatibility
 - **Data Storage**: Local database (with plans of cloud backup)
 
-
+## What I'm Working On
+- Document uploading
+- Editing client info after they are in the db
+- Built-in calendar for tax deadlines
 
 If you'd like to help develop this app, here are the steps you should follow to set up everything on your machine:
 
-This repository uses TypeScript, React (renderer) and Tailwind CSS. The project includes a simple formatting setup so contributors have a consistent code style, especially for `.tsx` files that contain Tailwind CSS classes.
+This repository uses TypeScript, React (renderer) and Tailwind CSS. The project includes a simple formatting setup so contributors have a consistent code style.
 
-Getting started (for contributors)
+Getting started (for potential contributors)
 
 1. Clone the repo:
 
-   git clone https://github.com/notsplol/tax-manager-app.git
-   cd tax-manager-app
+    git clone https://github.com/notsplol/tax-manager-app.git
+    cd tax-manager-app
 
 2. Install dependencies (root and renderer):
 
-   # install root deps
+   # install root dependencies
 
-   npm install
+    npm install
 
-   # install renderer deps (optional, if you work on the renderer explicitly)
+   # install renderer dependencies (optional, if you work on the renderer explicitly)
 
-   cd apps/renderer
-   npm install
-   cd -
+    cd apps/renderer
+    npm install
+    cd -
 
 3. Run the app in development mode:
 
-# Use the root script to run both the main backend and the renderer dev server
+   # Use the root script to run both the main backend and the renderer dev server
 
-npm run dev
+    npm run dev
 
 Formatting and linting
 
@@ -67,11 +73,11 @@ This repo uses Prettier for formatting with the `prettier-plugin-tailwindcss` pl
 
 - To format all files (JS/TS/TSX/CSS/MD):
 
-  npm run format
+    npm run format
 
 - To check formatting without changing files:
 
-  npm run format:check
+    npm run format:check
 
 If you're working only in `apps/renderer`, you can run the renderer-local scripts from that folder:
 
