@@ -1,3 +1,4 @@
+<pre> 
 # tax-manager-app
 This app is actively in development.
 
@@ -51,21 +52,24 @@ Getting started (for potential contributors)
 
 2. Install dependencies (root and renderer):
 
-   # install root dependencies
+   # install root dependencies:
 
     npm install
 
-   # install renderer dependencies (optional, if you work on the renderer explicitly)
+   # install renderer dependencies (optional, if you work on the renderer explicitly):
 
     cd apps/renderer
-    npm install
-    cd -
+    \nnpm install
+    \ncd -
 
 3. Run the app in development mode:
 
    # Use the root script to run both the main backend and the renderer dev server
 
     npm run dev
+
+
+
 
 Formatting and linting
 
@@ -93,4 +97,4 @@ Contributing
 
 - Open issues or PRs against `main`.
 - Keep commits focused and run `npm run format` before pushing to keep to code tidy.
-
+</pre>
