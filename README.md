@@ -1,4 +1,3 @@
-<pre> 
 # tax-manager-app
 This app is actively in development.
 
@@ -47,41 +46,41 @@ Getting started (for potential contributors)
 
 1. Clone the repo:
 
-    git clone https://github.com/notsplol/tax-manager-app.git
-    cd tax-manager-app
+    `git clone https://github.com/notsplol/tax-manager-app.git`
+    `cd tax-manager-app`
 
 2. Install dependencies (root and renderer):
 
    # install root dependencies:
 
-    npm install
+   `npm install`
 
    # install renderer dependencies (optional, if you work on the renderer explicitly):
 
-    cd apps/renderer
-    \nnpm install
-    \ncd -
+    `cd apps/renderer`
+    `npm install`
+    `cd -`
 
 3. Run the app in development mode:
 
    # Use the root script to run both the main backend and the renderer dev server
 
-    npm run dev
+    `npm run dev`
 
 
 
 
-Formatting and linting
+### Formatting and linting
 
 This repo uses Prettier for formatting with the `prettier-plugin-tailwindcss` plugin so Tailwind class lists are sorted consistently.
 
 - To format all files (JS/TS/TSX/CSS/MD):
 
-    npm run format
+    `npm run format`
 
 - To check formatting without changing files:
 
-    npm run format:check
+    `npm run format:check`
 
 If you're working only in `apps/renderer`, you can run the renderer-local scripts from that folder:
 
@@ -97,4 +96,3 @@ Contributing
 
 - Open issues or PRs against `main`.
 - Keep commits focused and run `npm run format` before pushing to keep to code tidy.
-</pre>
