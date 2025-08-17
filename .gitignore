@@ -1,1 +1,5 @@
 node_modules/
+.env
+/apps/renderer/.env
+secrets.json
+private-*.json

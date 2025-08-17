@@ -6,7 +6,7 @@ import {
   Clock,
   DollarSign,
   Trash2,
-  ArrowLeft
+  ArrowLeft,
 } from 'lucide-react';
 
 type Client = {
@@ -33,7 +33,7 @@ export default function PaymentsPage() {
   // Search/filter state
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'Paid' | 'Pending' | 'Overdue'>('all');
-  
+
   // Add payment form state
   const [showAddForm, setShowAddForm] = useState(false);
   const [clientId, setClientId] = useState<number | null>(null);
@@ -67,13 +67,13 @@ export default function PaymentsPage() {
   const metrics = useMemo(() => {
     const totalRevenue = payments.reduce((sum, p) => sum + (p.amount ?? 0), 0);
     const paidAmount = payments
-      .filter(p => p.status === 'Paid')
+      .filter((p) => p.status === 'Paid')
       .reduce((sum, p) => sum + (p.amount ?? 0), 0);
     const pendingAmount = payments
-      .filter(p => p.status === 'Pending')
+      .filter((p) => p.status === 'Pending')
       .reduce((sum, p) => sum + (p.amount ?? 0), 0);
     const overdueAmount = payments
-      .filter(p => p.status === 'Overdue')
+      .filter((p) => p.status === 'Overdue')
       .reduce((sum, p) => sum + (p.amount ?? 0), 0);
 
     return { totalRevenue, paidAmount, pendingAmount, overdueAmount };
@@ -81,7 +81,7 @@ export default function PaymentsPage() {
 
   // Filtered payments based on search & status filter
   const filteredPayments = useMemo(() => {
-    return payments.filter(p => {
+    return payments.filter((p) => {
       const clientName = p.client?.name ?? '';
       const matchesSearch =
         clientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -105,8 +105,6 @@ export default function PaymentsPage() {
     }
   };
 
-  
-
   // Format currency
   const formatCurrency = (amount?: number) => {
     if (amount === undefined) return '-';
@@ -126,125 +124,123 @@ export default function PaymentsPage() {
       year: 'numeric',
     });
   };
- 
 
- const handleStatusChange = async (paymentId: number, newStatus: 'Paid' | 'Pending' | 'Overdue') => {
-  try {
-    await fetch(`http://localhost:4000/api/payments/${paymentId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ status: newStatus }),
-    });
+  const handleStatusChange = async (
+    paymentId: number,
+    newStatus: 'Paid' | 'Pending' | 'Overdue'
+  ) => {
+    try {
+      await fetch(`http://localhost:4000/api/payments/${paymentId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
 
-    // Update local state for immediate feedback
-    setPayments((prev) =>
-      prev.map((p) =>
-        p.id === paymentId ? { ...p, status: newStatus } : p
-      )
-    );
-  } catch (err) {
-    console.error('Failed to update payment status', err);
-  }
-};
-
-
-const handleDeletePayment = async (paymentId: number) => {
-  if (!confirm('Are you sure you want to delete this payment?')) return;
-
-  try {
-    // Optimistic UI update: remove from local state immediately
-    setPayments((prev) => prev.filter((p) => p.id !== paymentId));
-
-    // Call backend API to delete payment
-    const res = await fetch(`http://localhost:4000/api/payments/${paymentId}`, {
-      method: 'DELETE',
-    });
-
-    if (!res.ok) {
-      throw new Error('Failed to delete payment');
+      // Update local state for immediate feedback
+      setPayments((prev) =>
+        prev.map((p) => (p.id === paymentId ? { ...p, status: newStatus } : p))
+      );
+    } catch (err) {
+      console.error('Failed to update payment status', err);
     }
-  } catch (error) {
-    alert('Error deleting payment. Please try again.');
-    console.error(error);
+  };
 
-    const paymentsRes = await fetch('http://localhost:4000/api/payments');
-    const paymentsData = await paymentsRes.json();
-    setPayments(paymentsData);
-  }
-};
+  const handleDeletePayment = async (paymentId: number) => {
+    if (!confirm('Are you sure you want to delete this payment?')) return;
+
+    try {
+      // Optimistic UI update: remove from local state immediately
+      setPayments((prev) => prev.filter((p) => p.id !== paymentId));
+
+      // Call backend API to delete payment
+      const res = await fetch(`http://localhost:4000/api/payments/${paymentId}`, {
+        method: 'DELETE',
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to delete payment');
+      }
+    } catch (error) {
+      alert('Error deleting payment. Please try again.');
+      console.error(error);
+
+      const paymentsRes = await fetch('http://localhost:4000/api/payments');
+      const paymentsData = await paymentsRes.json();
+      setPayments(paymentsData);
+    }
+  };
 
   if (loading) return <p className="p-6 text-gray-500">Loading...</p>;
   if (error) return <p className="p-6 text-red-500">{error}</p>;
 
   return (
     <div className="min-h-screen bg-[#272727] text-white">
-      
-      <div className="max-w-7xl mx-auto p-6">
+      <div className="mx-auto max-w-7xl p-6">
         {/* Header */}
         <div className="mb-[2rem]">
-          <h1 className="text-3xl font-bold text-white mb-2">Payments Dashboard</h1>
-          <p className="text-white ml-[2rem] font-[300]">
+          <h1 className="mb-2 text-3xl font-bold text-white">Payments Dashboard</h1>
+          <p className="ml-[2rem] font-[300] text-white">
             Track client payments, revenue, and manage your finances
           </p>
         </div>
 
         {/* Metrics Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-[1rem]">
-          <div className="bg-[#3c3c3c] rounded-2xl p-6 backdrop-blur-md border border-white/10 shadow-xl hover:shadow-4xl transition-all duration-300 ml-[2rem] mb-[2rem]">
-            <div className="flex items-center justify-between mb-4">
-              <div className="py-[0.6rem] px-[0.75rem] bg-gradient-to-r from-[#2563eb] to-[#6086d7] rounded-[1rem]">
-                <TrendingUp className="w-6 h-6 text-white" />
+        <div className="mb-[1rem] grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div className="hover:shadow-4xl mb-[2rem] ml-[2rem] rounded-2xl border border-white/10 bg-[#3c3c3c] p-6 shadow-xl backdrop-blur-md transition-all duration-300">
+            <div className="mb-4 flex items-center justify-between">
+              <div className="rounded-[1rem] bg-gradient-to-r from-[#2563eb] to-[#6086d7] px-[0.75rem] py-[0.6rem]">
+                <TrendingUp className="h-6 w-6 text-white" />
               </div>
             </div>
-            <h3 className="text-sm font-medium text-white mb-1">Total Revenue</h3>
+            <h3 className="mb-1 text-sm font-medium text-white">Total Revenue</h3>
             <p className="text-2xl font-bold text-white">{formatCurrency(metrics.totalRevenue)}</p>
           </div>
 
-          <div className="bg-[#3c3c3c] rounded-2xl p-6 backdrop-blur-md border border-white/10 shadow-xl hover:shadow-4xl transition-all duration-300 ml-[2rem] mb-[2rem]">
-            <div className="flex items-center justify-between mb-4">
-              <div className="py-[0.6rem] px-[0.75rem] bg-gradient-to-r from-[#1e7c42] to-[#4ade80] rounded-xl">
-                <CheckCircle className="w-6 h-6 text-white" />
+          <div className="hover:shadow-4xl mb-[2rem] ml-[2rem] rounded-2xl border border-white/10 bg-[#3c3c3c] p-6 shadow-xl backdrop-blur-md transition-all duration-300">
+            <div className="mb-4 flex items-center justify-between">
+              <div className="rounded-xl bg-gradient-to-r from-[#1e7c42] to-[#4ade80] px-[0.75rem] py-[0.6rem]">
+                <CheckCircle className="h-6 w-6 text-white" />
               </div>
             </div>
-            <h3 className="text-sm font-medium text-white mb-1">Paid Amount</h3>
+            <h3 className="mb-1 text-sm font-medium text-white">Paid Amount</h3>
             <p className="text-2xl font-bold text-white">{formatCurrency(metrics.paidAmount)}</p>
           </div>
 
-          <div className="bg-[#3c3c3c] rounded-2xl p-6 backdrop-blur-md border border-white/10 shadow-xl hover:shadow-4xl transition-all duration-300 ml-[2rem] mb-[2rem]">
-            <div className="flex items-center justify-between mb-4">
-              <div className="py-[0.6rem] px-[0.75rem] bg-gradient-to-r from-[#92400e] to-[#fdba74] rounded-xl">
-                <Clock className="w-6 h-6 text-white" />
+          <div className="hover:shadow-4xl mb-[2rem] ml-[2rem] rounded-2xl border border-white/10 bg-[#3c3c3c] p-6 shadow-xl backdrop-blur-md transition-all duration-300">
+            <div className="mb-4 flex items-center justify-between">
+              <div className="rounded-xl bg-gradient-to-r from-[#92400e] to-[#fdba74] px-[0.75rem] py-[0.6rem]">
+                <Clock className="h-6 w-6 text-white" />
               </div>
             </div>
-            <h3 className="text-sm font-medium text-white mb-1">Pending Amount</h3>
+            <h3 className="mb-1 text-sm font-medium text-white">Pending Amount</h3>
             <p className="text-2xl font-bold text-white">{formatCurrency(metrics.pendingAmount)}</p>
           </div>
 
-          <div className="bg-[#3c3c3c] rounded-2xl p-6 backdrop-blur-md border border-white/10 shadow-xl hover:shadow-4xl transition-all duration-300 ml-[2rem] mb-[2rem]">
-            <div className="flex items-center justify-between mb-4">
-              <div className="py-[0.6rem] px-[0.75rem] bg-gradient-to-r from-[#991b1b] to-[#f87171] rounded-xl">
-                <DollarSign className="w-6 h-6 text-white" />
+          <div className="hover:shadow-4xl mb-[2rem] ml-[2rem] rounded-2xl border border-white/10 bg-[#3c3c3c] p-6 shadow-xl backdrop-blur-md transition-all duration-300">
+            <div className="mb-4 flex items-center justify-between">
+              <div className="rounded-xl bg-gradient-to-r from-[#991b1b] to-[#f87171] px-[0.75rem] py-[0.6rem]">
+                <DollarSign className="h-6 w-6 text-white" />
               </div>
             </div>
-            <h3 className="text-sm font-medium text-white mb-1">Overdue Amount</h3>
+            <h3 className="mb-1 text-sm font-medium text-white">Overdue Amount</h3>
             <p className="text-2xl font-bold text-white">{formatCurrency(metrics.overdueAmount)}</p>
           </div>
         </div>
 
         {/* Controls */}
-        <div className="bg-[#3c3c3c] rounded-2xl px-4 py-4 shadow-lg border border-slate-200 mb-6 ml-8">
-          <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
-            <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+        <div className="mb-6 ml-8 rounded-2xl border border-slate-200 bg-[#3c3c3c] px-4 py-4 shadow-lg">
+          <div className="flex flex-col items-center justify-between gap-4 lg:flex-row">
+            <div className="flex w-full flex-col gap-4 sm:flex-row lg:w-auto">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
+                <Search className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transform text-slate-400" />
                 <input
                   type="text"
                   placeholder="Search clients or description..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 py-3 w-full sm:w-80 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  className="w-full rounded-xl border border-slate-200 py-3 pr-4 pl-10 transition-all focus:border-transparent focus:ring-2 focus:ring-blue-500 sm:w-80"
                 />
               </div>
               <select
@@ -252,7 +248,7 @@ const handleDeletePayment = async (paymentId: number) => {
                 onChange={(e) =>
                   setStatusFilter(e.target.value as 'all' | 'Paid' | 'Pending' | 'Overdue')
                 }
-                className="px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                className="rounded-xl border border-slate-200 px-4 py-3 transition-all focus:border-transparent focus:ring-2 focus:ring-blue-500"
               >
                 <option value="all">All Status</option>
                 <option value="Paid">Paid</option>
@@ -260,80 +256,82 @@ const handleDeletePayment = async (paymentId: number) => {
                 <option value="Overdue">Overdue</option>
               </select>
             </div>
-          
           </div>
         </div>
 
-
-        <div className="ml-8 mt-6 mb-4">
+        <div className="mt-6 mb-4 ml-8">
           <a
             href="/clients"
-            className="inline-flex items-center text-sm text-blue-400 hover:text-blue-300 transition-colors"
+            className="inline-flex items-center text-sm text-blue-400 transition-colors hover:text-blue-300"
           >
-          <ArrowLeft className="w-4 h-4 mr-1" />
+            <ArrowLeft className="mr-1 h-4 w-4" />
             Back to Clients
           </a>
         </div>
-        
+
         {/* Payments Table */}
-        <div className="bg-[#3c3c3c] rounded-2xl shadow-lg border border-slate-200 overflow-x-auto ml-8">
+        <div className="ml-8 overflow-x-auto rounded-2xl border border-slate-200 bg-[#3c3c3c] shadow-lg">
           <table className="w-full min-w-[700px]">
-            <thead className="bg-[#3c3c3c] border-b border-slate-200">
+            <thead className="border-b border-slate-200 bg-[#3c3c3c]">
               <tr>
-                <th className="text-left py-4 px-6 text-sm font-semibold text-white">Client</th>
-                <th className="text-left py-4 px-6 text-sm font-semibold text-white">Amount</th>
-                <th className="text-left py-4 px-6 text-sm font-semibold text-white">Status</th>
-                <th className="text-left py-4 px-6 text-sm font-semibold text-white">Date</th>
-                <th className="text-left py-4 px-6 text-sm font-semibold text-white">Actions</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-white">Client</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-white">Amount</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-white">Status</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-white">Date</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-white">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
               {filteredPayments.map((payment) => (
-                <tr key={payment.id} className="hover:bg-[#1a1a1a] transition-colors">
-                  <td className="py-4 px-6">
-                    <div className="font-medium text-white">{payment.client?.name || 'Unknown'}</div>
+                <tr key={payment.id} className="transition-colors hover:bg-[#1a1a1a]">
+                  <td className="px-6 py-4">
+                    <div className="font-medium text-white">
+                      {payment.client?.name || 'Unknown'}
+                    </div>
                   </td>
-                  <td className="py-4 px-6">
+                  <td className="px-6 py-4">
                     <div className="font-semibold text-white">{formatCurrency(payment.amount)}</div>
                   </td>
-                  <td className="py-4 px-6">
+                  <td className="px-6 py-4">
                     <select
                       value={payment.status}
                       onChange={(e) =>
-                        handleStatusChange(payment.id, e.target.value as 'Paid' | 'Pending' | 'Overdue')
+                        handleStatusChange(
+                          payment.id,
+                          e.target.value as 'Paid' | 'Pending' | 'Overdue'
+                        )
                       }
-                      className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(
-                        payment.status,
+                      className={`rounded-full border px-2 py-1 text-xs font-medium ${getStatusColor(
+                        payment.status
                       )} bg-transparent text-white`}
                     >
-                      < option value="Paid">Paid</option>
+                      <option value="Paid">Paid</option>
                       <option value="Pending">Pending</option>
                       <option value="Overdue">Overdue</option>
                     </select>
                   </td>
-                  <td className="py-4 px-6">
+                  <td className="px-6 py-4">
                     <div className="text-white">{formatDate(payment.date)}</div>
                   </td>
-                  <td className="py-4 px-6">
+                  <td className="px-6 py-4">
                     <button
                       onClick={() => handleDeletePayment(payment.id)}
                       className="text-white hover:text-red-600"
                       title="Delete payment"
                       aria-label="Delete payment"
                     >
-                      <Trash2 className="w-5 h-5" />
+                      <Trash2 className="h-5 w-5" />
                     </button>
                   </td>
                 </tr>
               ))}
-              
             </tbody>
           </table>
         </div>
 
         {filteredPayments.length === 0 && (
-          <div className="text-center py-12 text-slate-500">
-            <div className="text-lg font-medium mb-2">No payments found</div>
+          <div className="py-12 text-center text-slate-500">
+            <div className="mb-2 text-lg font-medium">No payments found</div>
             <div>Try adjusting your search or filter criteria</div>
           </div>
         )}

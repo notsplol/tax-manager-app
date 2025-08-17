@@ -13,5 +13,4 @@
   },
   "exclude": ["node_modules"],
   "include": ["**/*.ts", "generated/prisma"]
-  
 }

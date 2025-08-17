@@ -8,11 +8,9 @@ import {
   DollarSign,
   Trash2,
   X,
-  Send,
   User,
   Phone,
   AtSign,
-  Calendar,
   Check,
   Search
 } from 'lucide-react';
@@ -27,16 +25,9 @@ const emailTemplates = [
     id: 1,
     name: 'Tax Documents',
     subject: 'Attached: Tax {{year}} Documents',
-    body: `Namaste {{name}},
+    body: `Good Evening {{name}},
 
-Please find attached your tax documents for {{year}}; We suggest you keep them safe for the next six years.
-If you have any further questions, contact us and we'll be happy to assist.
-
-Thank you for filing your taxes with us, we hope to see you next year!
-
-Best regards,
-Vijay Patel
-514 826 7442`,
+    Template`,
   },
 ];
 
@@ -149,7 +140,7 @@ const handleSendEmail = async () => {
               <User className="w-7 h-7 text-white" />
             </div>
             <h2 className="text-2xl font-semibold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text dark:text-white">
-              Vijay Patel
+              User
             </h2>
           </div>
         </div>
@@ -575,8 +566,3 @@ const handleSendEmail = async () => {
     </div>
   );
 }
-
-
-
-
-

@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.git/
+apps/main/generated/
+apps/main/prisma/migrations/
+**/*.d.ts
+**/*.lock

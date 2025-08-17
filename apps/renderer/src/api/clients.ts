@@ -9,7 +9,6 @@ type SimpleClientInput = {
   phone?: string | null;
 };
 
-
 export async function fetchClients(): Promise<Client[]> {
   const res = await fetch(`${API_URL}/clients`);
   if (!res.ok) throw new Error('Failed to fetch clients');

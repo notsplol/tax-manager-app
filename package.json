@@ -8,7 +8,9 @@
     "dev:main": "ts-node apps/main/index.ts",
     "dev:renderer": "npm --prefix apps/renderer run dev",
     "build": "tsc -b apps/main && npm --prefix apps/renderer run build",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "format": "prettier --write \"**/*.{js,ts,tsx,css,json,md}\"",
+    "format:check": "prettier --check \"**/*.{js,ts,tsx,css,json,md}\""
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,8 @@
     "concurrently": "^9.1.2",
     "electron": "^36.4.0",
     "postcss": "^8.5.6",
+    "prettier": "^3.6.2",
+    "prettier-plugin-tailwindcss": "^0.6.14",
     "typescript": "^5.8.3"
   },
   "dependencies": {
