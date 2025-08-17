@@ -97,4 +97,4 @@ Some recommendations
 Contributing
 
 - Open issues or PRs against `main`.
-- Keep commits focused and run `npm run format` before pushing to keep to code tidy.
+- Keep commits focused and run `npm run format` before pushing to keep code tidy.
