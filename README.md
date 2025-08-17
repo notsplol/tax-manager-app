@@ -9,8 +9,8 @@ This app is a client management system designed with tax professionals and accou
 - **Track Payments**: Payments Dashboard to keep track of paid, pending, and overdue payments from clients
 - **Send Emails**: Send automated emails to clients through Resend
 - **Document Management**: Upload, organize, and securely store tax documents (In development)
-- **Tax Year Tracking**: Manage multiple tax years and track preparation status for each client (In development)
-- **Deadline Management**: Built-in calendar and reminder system for important tax deadlines (To do)
+- **Tax Year Tracking**: Manage multiple tax years and track preparation status for each client (To do)
+- **Deadline Management**: Built-in calendar and reminder system for important tax deadlines (In development)
 - **Secure Storage**: Client data protection with encryption and secure authentication (To do)
 - **Reporting**: Generate reports on client status, outstanding documents, and revenue tracking (To do)
 
