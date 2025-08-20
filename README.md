@@ -23,12 +23,6 @@ This app is a client management system designed with tax professionals and accou
 ![App screenshot](./docs/images/tax-app-screen3)
 
 
-## Target Users
-- Individual tax preparers
-- Small to medium accounting firms
-- Tax professionals managing multiple clients
-- Anyone who needs to organize tax-related client information efficiently
-
 ## Technology Stack
 - **Frontend**: React with TypeScript for type safety
 - **Styling**: Tailwind CSS for responsive and consistent UI design
