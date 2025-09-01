@@ -2,17 +2,15 @@
 This app is actively in development.
 
 # Overview
-This app is a client management system designed with tax professionals and accounting firms in mind. It aims to provide an ultimate solution for managing client information, tracking tax documents, organizing financial records, and streamlining the tax preparation workflow.
+This app is a client management system designed with tax professionals and accounting firms in mind. It is currently being used at Patel Tax Services. It aims to provide an ultimate solution for managing client information, tracking tax documents, organizing financial records, and streamlining the tax preparation workflow.
 
 ## Key Features
 - **Client Database**: Maintain detailed client profiles with contact information, tax history, and notes
 - **Track Payments**: Payments Dashboard to keep track of paid, pending, and overdue payments from clients
 - **Send Emails**: Send automated emails to clients through Resend
-- **Document Management**: Upload, organize, and securely store tax documents (In development)
+- **Document Management**: Upload, organize, and securely store tax documents
 - **Tax Year Tracking**: Manage multiple tax years and track preparation status for each client (To do)
 - **Deadline Management**: Built-in calendar and reminder system for important tax deadlines (In development)
-- **Secure Storage**: Client data protection with encryption and secure authentication (To do)
-- **Reporting**: Generate reports on client status, outstanding documents, and revenue tracking (To do)
 
 
 ## Current UI
@@ -29,10 +27,6 @@ This app is a client management system designed with tax professionals and accou
 - **Desktop App**: Electron-based application for cross-platform compatibility
 - **Data Storage**: Local database (with plans of cloud backup)
 
-## What I'm Working On
-- Document uploading
-- Editing client info after they are in the db
-- Built-in calendar for tax deadlines
 
 If you'd like to help develop this app, here are the steps you should follow to set up everything on your machine:
 
