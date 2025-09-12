@@ -2,7 +2,7 @@
 This app is actively in development.
 
 # Overview
-This app is a client management system designed with tax professionals and accounting firms in mind. It is currently being used at Patel Tax Services. It aims to provide an ultimate solution for managing client information, tracking tax documents, organizing financial records, and streamlining the tax preparation workflow.
+This app is a client management system designed with tax professionals and accounting firms in mind. It is currently being used at ParcEx Tax Services. It aims to provide an ultimate solution for managing client information, tracking tax documents, organizing financial records, and streamlining the tax preparation workflow.
 
 ## Key Features
 - **Client Database**: Maintain detailed client profiles with contact information, tax history, and notes
@@ -13,7 +13,7 @@ This app is a client management system designed with tax professionals and accou
 - **Deadline Management**: Built-in calendar and reminder system for important tax deadlines (In development)
 
 
-## Current UI
+## Current UI and Sample Screenshots
 ![App screenshot](./docs/images/tax-app-screen1)
 
 ![App screenshot](./docs/images/tax-app-screen2)
