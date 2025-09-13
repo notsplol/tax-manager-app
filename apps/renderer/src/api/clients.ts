@@ -1,3 +1,14 @@
+// Upload document for a client
+export async function uploadClientDocument(clientId: number, file: File): Promise<{ filename: string; path: string }> {
+  const formData = new FormData();
+  formData.append('file', file);
+  const res = await fetch(`${API_URL}/clients/${clientId}/documents`, {
+    method: 'POST',
+    body: formData,
+  });
+  if (!res.ok) throw new Error('Failed to upload document');
+  return res.json();
+}
 import type { Client } from '../../../main/generated/prisma';
 //import { Prisma } from '../../../main/generated/prisma';
 

@@ -32,6 +32,10 @@ export default function ClientPage() {
   const [payments, setPayments] = useState<Payment[]>([]);
   const [activeTab, setActiveTab] = useState<'overview' | 'documents' | 'payments'>('overview');
   const [isEditing, setIsEditing] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
+  const [uploadError, setUploadError] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -166,12 +170,46 @@ export default function ClientPage() {
               <div>
                 <div className="mb-6 flex items-center justify-between">
                   <h3 className="text-xl font-semibold text-white">Documents</h3>
-                  <button className="flex items-center gap-2 rounded-xl bg-blue-700 px-4 py-2 text-white shadow-lg transition-all hover:bg-blue-800">
-                    <Upload className="h-4 w-4" />
-                    Upload Document
-                  </button>
                 </div>
-                <p className="text-gray-400">Document upload feature coming soon.</p>
+                <form
+                  className="mb-4 flex flex-col gap-4"
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    if (!id || !file) return;
+                    setUploading(true);
+                    setUploadSuccess(false);
+                    setUploadError(false);
+                    try {
+                      const formData = new FormData();
+                      formData.append('file', file);
+                      const res = await fetch(`http://localhost:4000/clients/${id}/documents`, {
+                        method: 'POST',
+                        body: formData,
+                      });
+                      if (!res.ok) throw new Error('Upload failed');
+                      setUploadSuccess(true);
+                    } catch (err) {
+                      setUploadError(true);
+                    } finally {
+                      setUploading(false);
+                    }
+                  }}
+                >
+                  <input
+                    type="file"
+                    onChange={(e) => setFile(e.target.files?.[0] || null)}
+                    className="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                  />
+                  <button
+                    type="submit"
+                    disabled={!file || uploading}
+                    className="rounded-xl bg-blue-500 px-4 py-2 text-white font-semibold hover:bg-blue-600 disabled:bg-gray-500"
+                  >
+                    {uploading ? 'Uploading...' : 'Upload Document'}
+                  </button>
+                  {uploadSuccess && <p className="text-green-400">Upload successful!</p>}
+                  {uploadError && <p className="text-red-400">Upload failed. Try again.</p>}
+                </form>
               </div>
             )}
 

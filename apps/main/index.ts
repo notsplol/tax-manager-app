@@ -1,4 +1,7 @@
 import express from 'express';
+import path from 'path';
+import fs from 'fs';
+import multer, { StorageEngine } from 'multer';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { PrismaClient } from './generated/prisma';
@@ -8,6 +11,34 @@ dotenv.config();
 
 const app = express();
 const prisma = new PrismaClient();
+
+// Multer storage config for per-client folders
+const storage: StorageEngine = multer.diskStorage({
+  destination: function (req: express.Request, file: Express.Multer.File, cb: (error: Error | null, destination: string) => void) {
+    const clientId = req.params.id;
+    const dir = path.join(__dirname, 'uploads', `client_${clientId}`);
+    fs.mkdirSync(dir, { recursive: true });
+    cb(null, dir);
+  },
+  filename: function (req: express.Request, file: Express.Multer.File, cb: (error: Error | null, filename: string) => void) {
+    cb(null, Date.now() + '-' + file.originalname);
+  },
+});
+const upload = multer({ storage });
+
+//simple health check endpoint
+app.get('/health', (req, res) => {
+  res.send('OK');
+});
+
+// POST upload document for client
+app.post('/clients/:id/documents', upload.single('file'), (req: express.Request, res: express.Response) => {
+  const file = (req as any).file;
+  if (!file) {
+    return res.status(400).json({ error: 'No file uploaded' });
+  }
+  res.json({ filename: file.filename, path: file.path });
+});
 
 app.use(
   cors({
