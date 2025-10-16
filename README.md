@@ -1,6 +1,3 @@
-# tax-manager-app
-This app is actively in development.
-
 # Overview
 This app is a client management system designed with tax professionals and accounting firms in mind. It aims to provide an ultimate solution for managing client information, tracking tax documents, organizing financial records, and streamlining the tax preparation workflow.
 
